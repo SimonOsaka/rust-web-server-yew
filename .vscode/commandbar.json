@@ -1,0 +1,56 @@
+{
+    "skipTerminateQuickPick": false,
+    "skipSwitchToOutput": false,
+    "skipErrorMessage": false,
+    "commands": [
+        {
+            "text": "▶︎ trunk serve",
+            "color": "lightgreen",
+            "tooltip": "trunk serve",
+            "language": "rust",
+            "commandType": "palette",
+            "command": "workbench.action.tasks.runTask|trunk serve",
+            "alignment": "left",
+            "priority": 10
+        },
+        {
+            "text": "▷ trunk build",
+            "color": "yellow",
+            "tooltip": "trunk build",
+            "language": "rust",
+            "commandType": "palette",
+            "command": "workbench.action.tasks.runTask|trunk build",
+            "alignment": "left",
+            "priority": 9
+        },
+        {
+            "text": "✓ clippy",
+            "color": "Purple",
+            "tooltip": "cargo clippy",
+            "language": "rust",
+            "commandType": "palette",
+            "command": "workbench.action.tasks.runTask|cargo clippy",
+            "alignment": "left",
+            "priority": 8
+        },
+        {
+            "text": "⚡︎ trunk build --release",
+            "color": "LightSteelBlue",
+            "tooltip": "trunk build --release",
+            "language": "rust",
+            "commandType": "palette",
+            "command": "workbench.action.tasks.runTask|trunk build --release",
+            "alignment": "left",
+            "priority": 7
+        },
+        {
+            "text": "Terminal",
+            "color": "orange",
+            "tooltip": "open a terminal in vscode",
+            "commandType": "palette",
+            "command": "workbench.action.terminal.toggleTerminal",
+            "alignment": "right",
+            "priority": 1000
+        }
+    ]
+}

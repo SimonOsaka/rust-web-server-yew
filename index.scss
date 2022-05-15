@@ -1,0 +1,22 @@
+$tabs-boxed-link-active-background-color:hsl(229, 53%, 53%);
+$tabs-link-active-color:#fff;
+
+.tabs {
+    li {
+        &.is-active {
+            a {
+                color: $tabs-link-active-color
+            }
+        }
+    }
+
+    &.is-boxed {
+        li {
+            &.is-active {
+                a {
+                    background-color: $tabs-boxed-link-active-background-color;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+[package]
+name = "rust-web-server-yew"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[features]
+default = ["mock"]
+mock = []
+
+[dependencies]
+yew = "0.19"
+yew-router = "0.16"
+yew-hooks = "0.1"
+wasm-bindgen = "0.2"
+serde_json = "1.0"
+serde = "1.0"
+gloo = "0.7"
+gloo-console = "0.2"
+web-sys = { version = "0.3", features = ["HtmlInputElement"] }
+once_cell = "1"
+parking_lot = "0.12"
+reqwest = { version = "0.11", features = ["json"] }
+thiserror = "1"
+dotenv_codegen = "0.15"

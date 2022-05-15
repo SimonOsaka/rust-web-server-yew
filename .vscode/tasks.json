@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "command": [
+                "trunk serve"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build",
+            "label": "trunk serve"
+        },
+        {
+            "type": "shell",
+            "command": [
+                "trunk build"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build",
+            "label": "trunk build"
+        },
+        {
+            "type": "shell",
+            "command": [
+                "cargo clippy"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build",
+            "label": "cargo clippy"
+        },
+        {
+            "type": "shell",
+            "command": [
+                "trunk build --release"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build",
+            "label": "trunk build --release"
+        },
+    ]
+}

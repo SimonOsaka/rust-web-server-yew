@@ -1,0 +1,79 @@
+[
+    {
+        "url": "/menu",
+        "method": "get",
+        "data": {
+            "menu": [
+                {
+                    "menu_label": "General",
+                    "menu_list": [
+                        {
+                            "label": "Dashboard",
+                            "name": "dashboard"
+                        },
+                        {
+                            "label": "Customers",
+                            "name": "customers"
+                        }
+                    ]
+                },
+                {
+                    "menu_label": "Administration",
+                    "menu_list": [
+                        {
+                            "label": "Team Settings",
+                            "name": "team_settings"
+                        },
+                        {
+                            "label": "Manage Your Team",
+                            "name": "manage_your_team",
+                            "menu_list": [
+                                {
+                                    "label": "Members",
+                                    "name": "members"
+                                },
+                                {
+                                    "label": "Plugins",
+                                    "name": "plugins"
+                                },
+                                {
+                                    "label": "Add a member",
+                                    "name": "add_a_member"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Invitations",
+                            "name": "invitations"
+                        },
+                        {
+                            "label": "Cloud Storage Environment Settings",
+                            "name": "cloud_storage_environment_settings"
+                        },
+                        {
+                            "label": "Authentication",
+                            "name": "authentication"
+                        }
+                    ]
+                },
+                {
+                    "menu_label": "Transactions",
+                    "menu_list": [
+                        {
+                            "label": "Payments",
+                            "name": "payments"
+                        },
+                        {
+                            "label": "Transfers",
+                            "name": "transfers"
+                        },
+                        {
+                            "label": "Balance",
+                            "name": "balance"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
