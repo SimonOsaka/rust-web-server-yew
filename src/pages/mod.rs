@@ -1,4 +1,5 @@
 pub mod card_list;
+pub mod chart_page;
 pub mod documentation;
 mod general;
 pub mod home;

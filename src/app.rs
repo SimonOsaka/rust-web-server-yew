@@ -1,5 +1,5 @@
 use crate::components::{
-    chart::Chart, footer::Footer, navbar::Navbar, user_context_provider::UserContextProvider,
+    footer::Footer, navbar::Navbar, user_context_provider::UserContextProvider,
 };
 use crate::pages::{
     card_list::CardList, documentation::Documentation, home::Home, page_not_found::PageNotFound,
@@ -75,7 +75,7 @@ fn switch(routes: &Route) -> Html {
             html! { <Documentation /> }
         }
         Route::About => {
-            html! { <Chart /> }
+            html! {}
         }
         Route::Signup => {
             html! { <Signup /> }

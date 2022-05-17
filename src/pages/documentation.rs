@@ -4,7 +4,7 @@ use crate::{
         menu::{Menu, MenuProps},
         tabs::{Tab, Tabs, TabsProps},
     },
-    pages::{general::dashboard::Dashboard, modal_page::ModalPage},
+    pages::{chart_page::ChartPage, general::dashboard::Dashboard, modal_page::ModalPage},
 };
 use yew::{
     function_component, html, html_nested, props, use_state, virtual_dom::VChild, Callback,
@@ -130,6 +130,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "modal" => html_nested! {
             <Tab label="Modal" name="modal">
                 <ModalPage />
+            </Tab>
+        },
+        "chart" => html_nested! {
+            <Tab label="Chart" name="chart">
+                <ChartPage />
             </Tab>
         },
         _ => panic!("No menu found"),

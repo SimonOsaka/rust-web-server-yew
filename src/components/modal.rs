@@ -1,5 +1,3 @@
-use crate::components::card::Card;
-use crate::components::media_object::MediaObjectArticle;
 use web_sys::MouseEvent;
 use yew::{
     classes, function_component, html, use_effect_with_deps, use_state, Callback, Children,

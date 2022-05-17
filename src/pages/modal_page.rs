@@ -1,6 +1,5 @@
 use crate::components::{
     card::Card,
-    media_object::MediaObjectArticle,
     modal::{Modal, ModalEnum, ModalProps},
 };
 use web_sys::MouseEvent;

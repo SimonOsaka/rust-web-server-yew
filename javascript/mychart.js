@@ -1,10 +1,11 @@
 export class MyChart {
-    constructor() {
+    constructor(id) {
+        this.id = id
     }
 
     draw(config) {
         this.chart = new Chart(
-            document.getElementById('mychart'),
+            document.getElementById(this.id),
             config
         )
     }
