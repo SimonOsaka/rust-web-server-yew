@@ -122,8 +122,8 @@ pub(crate) fn mock(url: String, method: String) -> String {
             if let Some(mock_array) = mock_array {
                 for mock in mock_array {
                     let url = url.clone();
-                    let path_url = if url.contains("?") {
-                        let split_url: Vec<&str> = url.split("?").collect();
+                    let path_url = if url.contains('?') {
+                        let split_url: Vec<&str> = url.split('?').collect();
                         split_url
                             .first()
                             .unwrap_or_else(|| panic!("url ? failed"))

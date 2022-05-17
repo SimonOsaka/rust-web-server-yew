@@ -1,5 +1,4 @@
 use serde_json::{json, Value};
-use yew::Component;
 use yew::{function_component, html, use_state, Properties};
 
 use wasm_bindgen::prelude::*;
@@ -18,77 +17,6 @@ extern "C" {
     #[wasm_bindgen(method)]
     fn update(this: &MyChart, data: JsValue);
 }
-
-// pub enum Msg {
-//     Draw,
-// }
-
-// pub struct Chart {
-//     chart: MyChart,
-//     is_clicked: bool,
-// }
-
-// impl Component for Chart {
-//     type Message = Msg;
-//     type Properties = ();
-
-//     fn create(_ctx: &Context<Self>) -> Self {
-//         Self {
-//             chart: MyChart::new(),
-//             is_clicked: false,
-//         }
-//     }
-
-//     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
-//         match msg {
-//             Msg::Draw => {
-//                 if !self.is_clicked {
-//                     let data = get_chart_data(vec![30, 25, 20, 15, 10, 5]);
-//                     let jsvalue = JsValue::from_serde(&data);
-//                     if let Ok(d) = jsvalue {
-//                         self.chart.update(d);
-//                     }
-//                     self.is_clicked = true;
-//                     console_log!("self.is_clicked: {}", self.is_clicked);
-//                 } else {
-//                     console_log!("chart was drawn");
-//                 }
-
-//                 true
-//             }
-//         }
-//     }
-
-//     fn view(&self, ctx: &Context<Self>) -> Html {
-//         // This gives us a component's "`Scope`" which allows us to send messages, etc to the component.
-//         let link = ctx.link();
-//         html! {
-//             <>
-//                 <button onclick={link.callback(|_| Msg::Draw)}>{ "update" }</button>
-//                 <div>
-//                     <canvas id="mychart" width="400" height="400"></canvas>
-//                 </div>
-//             </>
-//         }
-//     }
-
-//     fn rendered(&mut self, _ctx: &Context<Self>, first_render: bool) {
-//         if first_render {
-//             let data = get_chart_data(vec![0, 5, 10, 15, 20, 25]);
-//             let config = json!({
-//                 "type": "line",
-//                 "data": data,
-//                 "options": {
-//                     "responsive": false
-//                 }
-//             });
-//             let jsvalue = JsValue::from_serde(&config);
-//             if let Ok(cfg) = jsvalue {
-//                 self.chart.draw(cfg);
-//             }
-//         }
-//     }
-// }
 
 fn get_chart_data<T>(label: Vec<String>, data: Vec<T>, title: String) -> Value
 where
@@ -109,7 +37,7 @@ where
 
 #[derive(Clone, Debug, Eq, PartialEq, Properties)]
 pub struct LineChartProps {
-    #[prop_or("my_linechart".to_string())]
+    #[prop_or_else(gen_auto_id)]
     pub id: String,
     #[prop_or(Vec::<String>::new())]
     pub label: Vec<String>,
@@ -164,7 +92,7 @@ pub fn line_chart(props: &LineChartProps) -> Html {
 
     {
         let data = data.clone();
-        let chart = chart.clone();
+        // let chart = chart.clone();
         let label = label.clone();
         let title = title.clone();
         use_effect_update_with_deps(
@@ -181,14 +109,16 @@ pub fn line_chart(props: &LineChartProps) -> Html {
         );
     }
 
-    let chart_id = {
-        let id = id.clone();
-        id
-    };
+    let chart_id = id.clone();
 
     html! {
         <div>
             <canvas id={chart_id} width={width.to_string()} height={height.to_string()}></canvas>
         </div>
     }
+}
+
+fn gen_auto_id() -> String {
+    let id = uuid::Uuid::new_v4();
+    id.to_string()
 }

@@ -31,8 +31,8 @@ pub fn chart_page() -> Html {
     html! {
         <>
             <button class="button is-primary" onclick={onclick_linechart}>{ "update" }</button>
-            <LineChart id={"linechart".to_string()} label={label.clone()} data={(*data).clone()}/>
-            <LineChart id={"linechart1".to_string()} label={label} data={(*data).clone()} width={800} height={400}/>
+            <LineChart  label={label.clone()} data={(*data).clone()}/>
+            <LineChart  label={label} data={(*data).clone()} width={800} height={400}/>
         </>
     }
 }

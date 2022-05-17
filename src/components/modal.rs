@@ -59,7 +59,7 @@ pub fn modal(props: &ModalProps) -> Html {
     };
 
     let onclick_ok = {
-        let state = state.clone();
+        // let state = state.clone();
         let callback = callback.clone();
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();

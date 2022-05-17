@@ -60,7 +60,7 @@ pub fn menu(props: &MenuProps) -> Html {
                     callback.emit(menu_second_item.name)
                 })
             };
-            if *current == menu_second_item.clone().name {
+            if *current == menu_second_item.name {
                 html! { <li><a class="is-active">{ menu_second_item.clone().label }</a></li> }
             } else {
                 html! { <li><a onclick={onclick}>{ menu_second_item.clone().label }</a>{ third_level(menu_second_item.menu_list) }</li> }

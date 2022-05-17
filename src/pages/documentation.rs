@@ -24,7 +24,7 @@ pub fn documentation() -> Html {
 
     // tabs
     let current_tab = use_state(|| "".to_string());
-    let menu_tab = use_state(|| Vec::<String>::new());
+    let menu_tab = use_state(Vec::<String>::new);
     let current_menu = use_state(|| "".to_string());
     let tabs_toggle_callback = {
         let current_tab = current_tab.clone();
@@ -86,7 +86,7 @@ pub fn documentation() -> Html {
 
     let menu_tab_html = {
         let menu_tab = (*menu_tab).clone();
-        menu_tab.into_iter().map(|tab| get_menu(tab))
+        menu_tab.into_iter().map(get_menu)
     };
 
     let menu_props = MenuProps {
