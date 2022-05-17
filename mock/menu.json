@@ -12,6 +12,10 @@
                             "name": "dashboard"
                         },
                         {
+                            "label": "Modal",
+                            "name": "modal"
+                        },
+                        {
                             "label": "Customers",
                             "name": "customers"
                         }

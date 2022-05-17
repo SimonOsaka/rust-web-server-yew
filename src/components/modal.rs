@@ -1,72 +1,94 @@
 use crate::components::card::Card;
 use crate::components::media_object::MediaObjectArticle;
-use yew::{classes, function_component, html, Properties};
+use web_sys::MouseEvent;
+use yew::{
+    classes, function_component, html, use_effect_with_deps, use_state, Callback, Children,
+    Properties,
+};
 
-#[derive(Clone, Debug, Eq, PartialEq, Properties)]
-pub struct Props {
+pub enum ModalEnum {
+    Cancel,
+    Ok,
+}
+
+#[derive(Clone, Debug, PartialEq, Properties)]
+pub struct ModalProps {
+    #[prop_or(false)]
     pub is_active: bool,
+    #[prop_or("Ok".to_string())]
+    pub btn_ok_text: String,
+    #[prop_or("Cancel".to_string())]
+    pub btn_cancel_text: String,
+    #[prop_or_default]
+    pub children: Children,
+    pub callback: Callback<ModalEnum>,
 }
 
 #[function_component(Modal)]
-pub fn modal(props: &Props) -> Html {
-    let is_active_bool = props.is_active;
+pub fn modal(props: &ModalProps) -> Html {
+    let ModalProps {
+        is_active,
+        callback,
+        children,
+        btn_ok_text,
+        btn_cancel_text,
+    } = props;
 
-    let is_active_class = if is_active_bool { "is-active" } else { "" };
+    let state = use_state(|| false);
 
-    html! {
-        <div class={classes!("modal", is_active_class)}>
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="box">
-            <MediaObjectArticle/>
-            </div>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-        </div>
+    // let is_active_bool = props.is_active;
+    {
+        let state = state.clone();
+        use_effect_with_deps(
+            move |active| {
+                state.set(*active);
+                || ()
+            },
+            *is_active,
+        );
     }
-}
 
-#[function_component(ModalImage)]
-pub fn modal_image(props: &Props) -> Html {
-    let is_active_bool = props.is_active;
+    let is_active_class = if *state { "is-active" } else { "" };
 
-    let is_active_class = if is_active_bool { "is-active" } else { "" };
+    let onclick_close = {
+        let state = state.clone();
+        let callback = callback.clone();
+        Callback::from(move |e: MouseEvent| {
+            e.prevent_default();
+            state.set(false);
+            callback.emit(ModalEnum::Cancel);
+        })
+    };
 
-    html! {
-        <div class={classes!("modal", is_active_class)}>
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <p class="image is-4by3">
-            <img src="https://bulma.io/images/placeholders/1280x960.png" alt=""/>
-            </p>
-        </div>
-        <button class="modal-close is-large" aria-label="close"></button>
-        </div>
-    }
-}
-
-#[function_component(ModalCard)]
-pub fn modal_card(props: &Props) -> Html {
-    let is_active_bool = props.is_active;
-
-    let is_active_class = if is_active_bool { "is-active" } else { "" };
+    let onclick_ok = {
+        let state = state.clone();
+        let callback = callback.clone();
+        Callback::from(move |e: MouseEvent| {
+            e.prevent_default();
+            state.set(false);
+            callback.emit(ModalEnum::Ok);
+        })
+    };
 
     html! {
         <div class={classes!("modal", is_active_class)}>
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                <p class="modal-card-title">{"Modal title"}</p>
-                <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                <Card/>
-                </section>
-                <footer class="modal-card-foot">
-                <button class="button is-success">{"Save changes"}</button>
-                <button class="button">{"Cancel"}</button>
-                </footer>
+            <div class="modal-background" onclick={onclick_close.clone()}></div>
+            <div class="modal-content">
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">{"Modal title"}</p>
+                        <button class="delete" aria-label="close" onclick={onclick_close.clone()}></button>
+                    </header>
+                    <section class="modal-card-body">
+                        { for children.iter() }
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-success" onclick={onclick_ok}>{ btn_ok_text }</button>
+                        <button class="button" onclick={onclick_close.clone()}>{ btn_cancel_text }</button>
+                    </footer>
+                </div>
             </div>
+            <button class="modal-close is-large" aria-label="close" onclick={onclick_close}></button>
         </div>
     }
 }

@@ -1,7 +1,7 @@
 {
     "editor.fontFamily": "'Jetbrains Mono', 'Courier New'",
     "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 76,
+    "editor.wordWrapColumn": 80,
     "workbench.colorCustomizations": {
         "editor.background": "#C7EDCC",
     },

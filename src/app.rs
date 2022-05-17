@@ -49,7 +49,7 @@ pub fn app() -> Html {
 
 
 
-                    // <Modal is_active=false/>
+
                     // <ModalImage is_active=false/>
                     // <ModalCard is_active=false/>
                 </main>
