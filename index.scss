@@ -1,5 +1,5 @@
-$tabs-boxed-link-active-background-color:hsl(229, 53%, 53%);
-$tabs-link-active-color:#fff;
+$tabs-boxed-link-active-background-color: hsl(229, 53%, 53%);
+$tabs-link-active-color: #fff;
 
 .tabs {
     li {
@@ -18,5 +18,18 @@ $tabs-link-active-color:#fff;
                 }
             }
         }
+    }
+}
+
+.notification-area {
+    position: fixed;
+    top: 80px;
+    right: 10px;
+    max-width: 300px;
+
+    .default-style {
+        position: relative;
+        display: flex;
+        width: 260px;
     }
 }

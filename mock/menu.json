@@ -20,6 +20,10 @@
                             "name": "chart"
                         },
                         {
+                            "label": "Notification",
+                            "name": "notification"
+                        },
+                        {
                             "label": "Customers",
                             "name": "customers"
                         }

@@ -1,5 +1,6 @@
 use crate::components::{
-    footer::Footer, navbar::Navbar, user_context_provider::UserContextProvider,
+    footer::Footer, navbar::Navbar, notifications::Notifications,
+    user_context_provider::UserContextProvider,
 };
 use crate::pages::{
     card_list::CardList, documentation::Documentation, home::Home, page_not_found::PageNotFound,
@@ -52,6 +53,7 @@ pub fn app() -> Html {
 
                     // <ModalImage is_active=false/>
                     // <ModalCard is_active=false/>
+                    <Notifications />
                 </main>
 
                 <Footer/>
