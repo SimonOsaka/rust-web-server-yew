@@ -18,7 +18,7 @@ pub fn notification_page() -> Html {
             let props = NotificationProps::builder()
                 .show_type(get_show_type())
                 .text(format!("abc-{}", random_number::random!(0..100)))
-                .timeout(0)
+                .timeout(3000)
                 .build();
 
             notification_agent.send(NotificationInput::Add(props));

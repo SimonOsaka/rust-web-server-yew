@@ -32,4 +32,14 @@ $tabs-link-active-color: #fff;
         display: flex;
         width: 260px;
     }
+
+    .right-in {
+        animation: fadeInRight;
+        animation-duration: 500ms;
+    }
+
+    .right-out {
+        animation: fadeOutRight;
+        animation-duration: 500ms;
+    }
 }
