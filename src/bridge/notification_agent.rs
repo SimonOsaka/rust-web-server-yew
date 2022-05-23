@@ -1,4 +1,4 @@
-use crate::components::{notification::NotificationProps, notifications::NotificationList};
+use crate::components::{notifications::NotificationList, notifications::NotificationProps};
 use std::collections::HashSet;
 use yew::Callback;
 use yew_agent::{Agent, AgentLink, Context, HandlerId};

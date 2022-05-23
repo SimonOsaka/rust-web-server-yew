@@ -1,6 +1,6 @@
 use crate::{
     bridge::notification_agent::{NotificationAgent, NotificationInput},
-    components::notification::{NotificationProps, NotificationShowType},
+    components::notifications::{NotificationProps, NotificationShowType},
 };
 use web_sys::MouseEvent;
 use yew::{function_component, html, Callback, Properties};

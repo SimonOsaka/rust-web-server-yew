@@ -7,7 +7,6 @@ pub mod media_object;
 pub mod menu;
 pub mod modal;
 pub mod navbar;
-pub mod notification;
 pub mod notifications;
 pub mod pagination;
 pub mod section;
