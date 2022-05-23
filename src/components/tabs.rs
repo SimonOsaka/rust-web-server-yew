@@ -1,5 +1,5 @@
-use web_sys::{MouseEvent, HtmlLinkElement, HtmlButtonElement};
-use yew::{classes, function_component, html, Callback, Children, ChildrenWithProps, Properties, Classes, use_state, use_state_eq, TargetCast, NodeRef};
+use web_sys::{MouseEvent, HtmlButtonElement};
+use yew::{classes, function_component, html, Callback, Children, ChildrenWithProps, Properties, NodeRef};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct TabsProps {
@@ -20,8 +20,6 @@ pub fn tabs(props: &TabsProps) -> Html {
         callback_delete,
     } = props;
 
-    // let refs = use_state(Vec::<NodeRef>::new);
-
     // pass children value
     let children = children.clone();
     let tab_container_children = {
@@ -36,8 +34,7 @@ pub fn tabs(props: &TabsProps) -> Html {
     // tab html
     let children = children.clone();
     let tab_html = {
-        // let refs = refs.clone();
-        children.iter().enumerate().map(move|(i,tab)| {
+        children.iter().map(move|tab| {
             let onclick_delete = {
                 let callback_delete = callback_delete.clone();
                 let tab = tab.props.name.clone();
@@ -47,10 +44,7 @@ pub fn tabs(props: &TabsProps) -> Html {
                 })
             };
 
-            // let mut el_refs = (*refs).clone();
             let el_ref = NodeRef::default();
-            // el_refs.push(el_ref.clone());
-            // refs.set(el_refs);
 
             if !current.is_empty() && *current == tab.props.name {
                 html! {
@@ -75,18 +69,31 @@ pub fn tabs(props: &TabsProps) -> Html {
                         e.prevent_default();
                         gloo_console::log!("tab onmouseover ...");
                         if let Some(btn) =el_ref.cast::<HtmlButtonElement>(){
-                            btn.set_class_name("delete is-small ml-1");
+                            btn.set_class_name("delete is-small ml-1 fade-in");
                         }
                     })
                 };
 
                 let onmouseout_delete = {
-                    let el_ref=el_ref.clone();
+                    let el_ref = el_ref.clone();
                     Callback::from(move |e: MouseEvent| {
                         e.prevent_default();
                         gloo_console::log!("tab onmouseout ...");
-                        if let Some(btn) =el_ref.cast::<HtmlButtonElement>(){
-                            btn.set_class_name("delete is-small ml-1 is-invisible");
+                        if let Some(btn) = el_ref.cast::<HtmlButtonElement>(){
+                            btn.set_class_name("delete is-small ml-1 fade-out");
+                        }
+                    })
+                };
+
+                let onanimationend = {
+                    let el_ref = el_ref.clone();
+                    Callback::from(move |_| {
+                        if let Some(btn) = el_ref.cast::<HtmlButtonElement>(){
+                            let class_name = btn.class_name();
+                            gloo_console::log!("tabs onanimationend ...", class_name.clone());
+                            if class_name.contains("fade-out") {
+                                btn.set_class_name("delete is-small ml-1 is-invisible");
+                            }
                         }
                     })
                 };
@@ -94,7 +101,7 @@ pub fn tabs(props: &TabsProps) -> Html {
 
                 html! { 
                     <li onmouseover={onmouseover_delete} onmouseout={onmouseout_delete}>
-                        <a onclick={onclick_tab}>{ tab.props.label.clone() }<button ref={el_ref} class="delete is-small ml-1 is-invisible" onclick={onclick_delete}></button>
+                        <a onclick={onclick_tab}>{ tab.props.label.clone() }<button ref={el_ref} class="delete is-small ml-1 is-invisible" onclick={onclick_delete} {onanimationend}></button>
                         </a>
                     </li>
                 }

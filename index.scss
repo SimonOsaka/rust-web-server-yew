@@ -19,6 +19,16 @@ $tabs-link-active-color: #fff;
             }
         }
     }
+
+    .fade-in {
+        animation: fadeIn;
+        animation-duration: 500ms;
+    }
+
+    .fade-out {
+        animation: fadeOut;
+        animation-duration: 500ms;
+    }
 }
 
 .notification-area {
