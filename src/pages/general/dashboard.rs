@@ -9,7 +9,6 @@ use crate::{
     types::list::ListInfo,
 };
 use gloo::timers::future::TimeoutFuture;
-use wasm_bindgen_futures::spawn_local;
 use yew::{function_component, html, props, use_effect_with_deps, use_state, Callback};
 use yew_hooks::use_async;
 
