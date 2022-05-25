@@ -3,15 +3,16 @@ use crate::{
     components::{
         pagination::Pagination,
         pagination::PaginationProps,
-        table::{Table, TableProps},
+        table::{Table, TableData, TableProps, Td},
     },
+    types::list::ListInfo,
 };
 use yew::{function_component, html, props, use_effect_with_deps, use_state, Callback};
 use yew_hooks::use_async;
 
 #[function_component(Dashboard)]
 pub fn dashboard() -> Html {
-    let current_page = use_state(|| 1u64);
+    let current_page = use_state(|| 1usize);
     let list_all = {
         let current_page = current_page.clone();
         use_async(async move {
@@ -43,45 +44,70 @@ pub fn dashboard() -> Html {
     };
 
     if let Some(list_info) = &list_all.data {
-        if !list_info.list.is_empty() {
-            let list = list_info.list.clone();
-            let data: Vec<Vec<String>> = list
-                .into_iter()
-                .map(|item| vec![item.a, item.b, item.c])
-                .collect();
+        // if !list_info.list.is_empty() {
+        let data = list_info.list.clone();
 
-            // table props
-            let table_props = TableProps {
-                head: [
-                    "Column A".to_string(),
-                    "Column B".to_string(),
-                    "Column C".to_string(),
-                ]
-                .to_vec(),
+        // table props
+        let table_props = props! {
+             TableProps<ListInfo> {
                 data,
-            };
-            // pagination props
-            let pagination_props = props! {
-                PaginationProps {
-                    total: list_info.count,
-                    callback
-                }
-            };
+            }
+        };
+        // pagination props
+        let pagination_props = props! {
+            PaginationProps {
+                total: list_info.count,
+                callback
+            }
+        };
 
-            html! {
-                <>
-                    <Table ..table_props />
-                    <Pagination current={*current_page} ..pagination_props />
-                </>
-            }
-        } else {
-            html! {
-                { "No data" }
-            }
+        html! {
+            <>
+                <Table<ListInfo> ..table_props>
+                    <Td name="a" label="A" />
+                    <Td name="b" label="B" />
+                    <Td name="c" label="C" centered=true />
+                    <Td name="d" label="D" width=200 centered=true />
+                </Table<ListInfo>>
+                <Pagination current={*current_page} ..pagination_props />
+            </>
         }
+        // } else {
+        //     html! {
+        //         { "No data" }
+        //     }
+        // }
     } else {
         html! {
             { "Loading..." }
         }
     }
+}
+
+impl TableData for ListInfo {
+    fn get_field_as_html(&self, field_name: &str) -> Option<yew::Html> {
+        match field_name {
+            "a" => Some(html! {
+                <span class="tag">{self.clone().a}</span>
+            }),
+            "d" => Some(html! {
+                <div class="buttons are-small">
+                    <button class="button is-info is-outlined">{"view"}</button>
+                    <button class="button is-link is-outlined">{"edit"}</button>
+                    <button class="button is-danger is-outlined">{"delete"}</button>
+                </div>
+            }),
+            _ => None,
+        }
+    }
+
+    // fn get_field_as_value(&self, field_name: &str) -> Option<String> {
+    //     match field_name {
+    //         "c" => {
+    //             let value = serde_json::to_value(self.clone().c).unwrap();
+    //             Some(value.as_i64().unwrap().to_string())
+    //         }
+    //         _ => None,
+    //     }
+    // }
 }

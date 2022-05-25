@@ -1,17 +1,17 @@
 use yew::{classes, function_component, html, Callback, MouseEvent, Properties};
 
-const DEFAULT_CURRENT: u64 = 1;
-const DEFAULT_SIZE: u8 = 10;
+const DEFAULT_CURRENT: usize = 1;
+const DEFAULT_SIZE: usize = 10;
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct PaginationProps {
     #[prop_or(DEFAULT_CURRENT)]
-    pub current: u64,
+    pub current: usize,
     #[prop_or(DEFAULT_SIZE)]
-    pub size: u8,
+    pub size: usize,
     #[prop_or(0)]
-    pub total: u64,
-    pub callback: Callback<u64>,
+    pub total: usize,
+    pub callback: Callback<usize>,
 }
 #[function_component(Pagination)]
 pub fn pagination(props: &PaginationProps) -> Html {
@@ -22,12 +22,12 @@ pub fn pagination(props: &PaginationProps) -> Html {
         callback,
     } = props;
 
-    let total_page = if *total < *size as u64 {
+    let total_page = if *total < *size {
         1
-    } else if total % *size as u64 == 0 {
-        total / *size as u64
+    } else if total % *size == 0 {
+        total / *size
     } else {
-        (total / *size as u64) + 1
+        (total / *size) + 1
     };
 
     let current_page = if *current > total_page {
