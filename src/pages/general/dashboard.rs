@@ -1,23 +1,32 @@
 use crate::{
     api::list,
     components::{
+        loading::Loading,
         pagination::Pagination,
         pagination::PaginationProps,
         table::{Table, TableData, TableProps, Td},
     },
     types::list::ListInfo,
 };
+use gloo::timers::future::TimeoutFuture;
+use wasm_bindgen_futures::spawn_local;
 use yew::{function_component, html, props, use_effect_with_deps, use_state, Callback};
 use yew_hooks::use_async;
 
 #[function_component(Dashboard)]
 pub fn dashboard() -> Html {
+    let loading = use_state(|| false);
     let current_page = use_state(|| 1usize);
     let list_all = {
+        let loading = loading.clone();
         let current_page = current_page.clone();
         use_async(async move {
             gloo_console::log!("async request list::all");
-            list::all(*current_page).await
+            loading.set(true);
+            TimeoutFuture::new(3000).await;
+            let r = list::all(*current_page).await;
+            loading.set(false);
+            r
         })
     };
 
@@ -43,44 +52,37 @@ pub fn dashboard() -> Html {
         })
     };
 
-    if let Some(list_info) = &list_all.data {
-        // if !list_info.list.is_empty() {
-        let data = list_info.list.clone();
-
-        // table props
-        let table_props = props! {
-             TableProps<ListInfo> {
-                data,
-            }
-        };
-        // pagination props
-        let pagination_props = props! {
-            PaginationProps {
-                total: list_info.count,
-                callback
-            }
-        };
-
-        html! {
-            <>
-                <Table<ListInfo> ..table_props>
-                    <Td name="a" label="A" />
-                    <Td name="b" label="B" />
-                    <Td name="c" label="C" centered=true />
-                    <Td name="d" label="D" width=200 centered=true />
-                </Table<ListInfo>>
-                <Pagination current={*current_page} ..pagination_props />
-            </>
-        }
-        // } else {
-        //     html! {
-        //         { "No data" }
-        //     }
-        // }
+    let (data, count) = if let Some(list_info) = &list_all.data {
+        (list_info.list.clone(), list_info.count)
     } else {
-        html! {
-            { "Loading..." }
+        (vec![], 0)
+    };
+
+    // table props
+    let table_props = props! {
+         TableProps<ListInfo> {
+            data,
         }
+    };
+    // pagination props
+    let pagination_props = props! {
+        PaginationProps {
+            total: count,
+            callback
+        }
+    };
+
+    html! {
+        <>
+            <Table<ListInfo> ..table_props>
+                <Td name="a" label="A" />
+                <Td name="b" label="B" />
+                <Td name="c" label="C" centered=true />
+                <Td name="d" label="D" width=200 centered=true />
+            </Table<ListInfo>>
+            <Pagination current={*current_page} ..pagination_props />
+            <Loading loading={*loading} />
+        </>
     }
 }
 

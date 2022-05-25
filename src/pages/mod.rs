@@ -3,6 +3,7 @@ pub mod chart_page;
 pub mod documentation;
 mod general;
 pub mod home;
+pub mod loading_page;
 pub mod modal_page;
 pub mod notification_page;
 pub mod page_not_found;

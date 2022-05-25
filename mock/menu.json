@@ -24,6 +24,10 @@
                             "name": "notification"
                         },
                         {
+                            "label": "Loading",
+                            "name": "loading"
+                        },
+                        {
                             "label": "Customers",
                             "name": "customers"
                         }

@@ -5,8 +5,8 @@ use crate::{
         tabs::{Tab, Tabs, TabsProps},
     },
     pages::{
-        chart_page::ChartPage, general::dashboard::Dashboard, modal_page::ModalPage,
-        notification_page::NotificationPage,
+        chart_page::ChartPage, general::dashboard::Dashboard, loading_page::LoadingPage,
+        modal_page::ModalPage, notification_page::NotificationPage,
     },
 };
 use yew::{
@@ -143,6 +143,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "notification" => html_nested! {
             <Tab label="Notification" name="notification">
                 <NotificationPage />
+            </Tab>
+        },
+        "loading" => html_nested! {
+            <Tab label="Loading" name="loading">
+                <LoadingPage />
             </Tab>
         },
         _ => panic!("No menu found"),
