@@ -1,4 +1,6 @@
-use yew::{function_component, html, Classes, Properties};
+use crate::bridge::loading_agent::{LoadingAgent, LoadingResponse};
+use yew::{function_component, html, use_state, Classes, Properties};
+use yew_agent::use_bridge;
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct LoadingProps {
@@ -25,4 +27,25 @@ pub fn loading(props: &LoadingProps) -> Html {
             </div>
         </div>
     }
+}
+
+#[function_component(Loadings)]
+pub fn loadings() -> Html {
+    let loading = use_state(|| false);
+
+    {
+        let loading = loading.clone();
+        use_bridge::<LoadingAgent, _>(move |out| {
+            match out {
+                LoadingResponse::Out(is_loading) => {
+                    gloo_console::log!("Loadings LoadingResponse...", is_loading);
+
+                    loading.set(is_loading);
+                }
+            }
+            gloo_console::log!("Loadings received ...");
+        })
+    };
+
+    html! { <Loading loading={*loading} /> }
 }

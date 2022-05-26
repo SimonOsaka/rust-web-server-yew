@@ -1,7 +1,8 @@
 use crate::{
     api::list,
+    bridge::loading_agent::{LoadingAgent, LoadingInput},
     components::{
-        loading::Loading,
+        loading::LoadingProps,
         pagination::Pagination,
         pagination::PaginationProps,
         table::{Table, TableData, TableProps, Td},
@@ -9,22 +10,26 @@ use crate::{
     types::list::ListInfo,
 };
 use gloo::timers::future::TimeoutFuture;
-use yew::{function_component, html, props, use_effect_with_deps, use_state, Callback};
+use yew::{function_component, html, props, use_effect_with_deps, use_state, Callback, Properties};
+use yew_agent::use_bridge;
 use yew_hooks::use_async;
 
 #[function_component(Dashboard)]
 pub fn dashboard() -> Html {
-    let loading = use_state(|| false);
+    let loading_agent = use_bridge::<LoadingAgent, _>(|_| {});
     let current_page = use_state(|| 1usize);
     let list_all = {
-        let loading = loading.clone();
         let current_page = current_page.clone();
         use_async(async move {
             gloo_console::log!("async request list::all");
-            loading.set(true);
+            // open loading
+            let loading_props = LoadingProps::builder().loading(true).build();
+            loading_agent.send(LoadingInput::Input(loading_props));
             TimeoutFuture::new(3000).await;
             let r = list::all(*current_page).await;
-            loading.set(false);
+            // close loading
+            let loading_props = LoadingProps::builder().loading(false).build();
+            loading_agent.send(LoadingInput::Input(loading_props));
             r
         })
     };
@@ -80,7 +85,6 @@ pub fn dashboard() -> Html {
                 <Td name="d" label="D" width=200 centered=true />
             </Table<ListInfo>>
             <Pagination current={*current_page} ..pagination_props />
-            <Loading loading={*loading} />
         </>
     }
 }

@@ -23,7 +23,6 @@ where
     let TableProps { data, children } = props.clone();
 
     // all
-    let children = children.clone();
     let all = children
         .iter()
         .map(|child| {
@@ -62,13 +61,12 @@ where
 
     // tbody_html
     let tbody_html = {
-        if data.len() == 0 {
+        if data.is_empty() {
             html! {<tr><td colspan={format!("{}", all.len())} class="has-text-centered">{"No data..."}</td></tr>}
         } else {
-            let d = data.clone();
             html! {
                 {
-                    for d.iter().map(move |item| {
+                    for data.iter().map(move |item| {
                         let all = all.clone();
                         let value = serde_json::to_value(item).unwrap();
                         html!{

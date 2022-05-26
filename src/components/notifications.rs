@@ -23,7 +23,6 @@ pub fn notifications() -> Html {
     }
 
     let notification_html = {
-        let notification_list = notification_list.clone();
         let list = (*notification_list).clone();
         list.into_iter().map(|(i, props)| {
             html! { <Notification key={i} ..props /> }
@@ -80,7 +79,7 @@ pub fn notification(props: &NotificationProps) -> Html {
     let to_timeout = use_state(|| false);
 
     if *timeout != 0 {
-        let timeout = timeout.clone();
+        let timeout = *timeout;
         let to_timeout = to_timeout.clone();
         let animation_class = animation_class.clone();
         spawn_local(async move {
@@ -104,8 +103,6 @@ pub fn notification(props: &NotificationProps) -> Html {
     let onanimationend = {
         let close_callback = close_callback.clone();
         let timeout_callback = timeout_callback.clone();
-        let to_close = to_close.clone();
-        let to_timeout = to_timeout.clone();
         Callback::once(move |_| {
             if *to_close {
                 gloo_console::log!("Notification onanimationend close...");

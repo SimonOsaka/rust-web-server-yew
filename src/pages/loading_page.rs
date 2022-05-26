@@ -1,29 +1,34 @@
-use crate::components::loading::Loading;
+use crate::{
+    bridge::loading_agent::{LoadingAgent, LoadingInput},
+    components::loading::LoadingProps,
+};
 use gloo::timers::future::TimeoutFuture;
 use wasm_bindgen_futures::spawn_local;
-use yew::{function_component, html, use_state, Callback};
+use yew::{function_component, html, Callback, Properties};
+use yew_agent::use_bridge;
 
 #[function_component(LoadingPage)]
 pub fn loading_page() -> Html {
-    let loading = use_state(|| false);
+    let loading_agent = use_bridge::<LoadingAgent, _>(|_| {});
 
     let onclick = {
-        let loading = loading.clone();
         Callback::from(move |_| {
-            let loading_open = loading.clone();
-            let loading_close = loading.clone();
+            let close_loading_agent = loading_agent.clone();
             spawn_local(async move {
                 TimeoutFuture::new(3000).await;
-                loading_close.set(false);
+                let loading_props = LoadingProps::builder().loading(false).build();
+                close_loading_agent.send(LoadingInput::Input(loading_props));
             });
-            loading_open.set(true);
+
+            let loading_props = LoadingProps::builder().loading(true).build();
+
+            loading_agent.send(LoadingInput::Input(loading_props));
         })
     };
 
     html! {
         <>
-            <button class="is-primary" {onclick}>{"Loading"}</button>
-            <Loading loading={*loading}/>
+            <button class="button is-primary" {onclick}>{"Loading"}</button>
         </>
     }
 }
