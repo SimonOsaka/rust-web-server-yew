@@ -1,6 +1,7 @@
 pub mod breadcrumb;
 pub mod card;
 pub mod chart;
+pub mod filter;
 pub mod footer;
 pub mod hero;
 pub mod loading;

@@ -5,8 +5,8 @@ use crate::{
         tabs::{Tab, Tabs, TabsProps},
     },
     pages::{
-        chart_page::ChartPage, general::dashboard::Dashboard, loading_page::LoadingPage,
-        modal_page::ModalPage, notification_page::NotificationPage,
+        chart_page::ChartPage, filters_page::FiltersPage, general::dashboard::Dashboard,
+        loading_page::LoadingPage, modal_page::ModalPage, notification_page::NotificationPage,
     },
 };
 use yew::{
@@ -125,9 +125,9 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
                 <Dashboard />
             </Tab>
         },
-        "customers" => html_nested! {
-            <Tab label="Customers" name="customers">
-                { menu }
+        "filters" => html_nested! {
+            <Tab label="Filters" name="filters">
+                <FiltersPage />
             </Tab>
         },
         "modal" => html_nested! {

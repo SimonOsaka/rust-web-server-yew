@@ -28,8 +28,8 @@
                             "name": "loading"
                         },
                         {
-                            "label": "Customers",
-                            "name": "customers"
+                            "label": "Filters",
+                            "name": "filters"
                         }
                     ]
                 },

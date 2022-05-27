@@ -1,6 +1,7 @@
 pub mod card_list;
 pub mod chart_page;
 pub mod documentation;
+pub mod filters_page;
 mod general;
 pub mod home;
 pub mod loading_page;
