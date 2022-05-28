@@ -1,6 +1,4 @@
 use crate::components::filter::{Filters, FiltersProps};
-use serde_json::json;
-use wasm_bindgen::JsValue;
 use yew::{function_component, html, Callback};
 
 #[function_component(FiltersPage)]

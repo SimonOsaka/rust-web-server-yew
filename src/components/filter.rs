@@ -5,11 +5,12 @@ type Label = String;
 type Value = String;
 type DefaultValue = String;
 type GroupLabel = String;
+type FilterPairs = Vec<(Label, Value)>;
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct FiltersProps {
     #[prop_or(vec![])]
-    pub data: Vec<(Vec<(Label, Value)>, DefaultValue, GroupLabel)>,
+    pub data: Vec<(FilterPairs, DefaultValue, GroupLabel)>,
     #[prop_or_default]
     pub callback: Callback<Vec<String>>,
 }
