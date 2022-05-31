@@ -1,4 +1,4 @@
-use yew::{classes, function_component, html, Callback, MouseEvent, Properties};
+use yew::{classes, function_component, html, Callback, Html, MouseEvent, Properties};
 
 const DEFAULT_CURRENT: usize = 1;
 const DEFAULT_SIZE: usize = 10;
@@ -108,7 +108,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
             });
             html! { <li><a class="pagination-link" onclick={onclick_page} aria-label={format!("Goto page {}", idx)}>{idx}</a></li> }
         }
-    });
+    }).collect::<Html>();
 
     // ... last
     let page_ellipsis_last = if current_page + 4 <= total_page && total_page > 7 {
@@ -141,7 +141,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
             <ul class="pagination-list">
                 { page_1 }
                 { page_1_ellipsis }
-                { for pages }
+                { pages }
                 { page_ellipsis_last }
                 { page_last }
             </ul>

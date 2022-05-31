@@ -1,7 +1,7 @@
 use crate::bridge::notification_agent::{NotificationAgent, NotificationResponse};
 use gloo::timers::future::TimeoutFuture;
 use wasm_bindgen_futures::spawn_local;
-use yew::{classes, function_component, html, use_state, Callback, Properties};
+use yew::{classes, function_component, html, use_state, Callback, Html, Properties};
 use yew_agent::use_bridge;
 
 #[function_component(Notifications)]
@@ -24,14 +24,16 @@ pub fn notifications() -> Html {
 
     let notification_html = {
         let list = (*notification_list).clone();
-        list.into_iter().map(|(i, props)| {
-            html! { <Notification key={i} ..props /> }
-        })
+        list.into_iter()
+            .map(|(i, props)| {
+                html! { <Notification key={i} ..props /> }
+            })
+            .collect::<Html>()
     };
 
     html! {
         <div class="notification-area">
-            { for notification_html }
+            { notification_html }
         </div>
     }
 }

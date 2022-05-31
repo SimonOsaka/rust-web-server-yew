@@ -1,5 +1,5 @@
 use web_sys::MouseEvent;
-use yew::{function_component, html, Callback, Properties};
+use yew::{function_component, html, Callback, Html, Properties};
 use yew_hooks::{use_async_with_options, UseAsyncOptions};
 
 use crate::{api::menu::get_menu, types::menu::MenuItem};
@@ -27,7 +27,7 @@ pub fn menu(props: &MenuProps) -> Html {
         if let Some(menu_list) = third_menu_list {
             html! {
                 <ul>
-                { for menu_list.into_iter().map(|menu_third_item| {
+                {menu_list.into_iter().map(|menu_third_item| {
                     let onclick = {
                         let menu_third_item = menu_third_item.clone();
                         let callback = callback.clone();
@@ -41,7 +41,7 @@ pub fn menu(props: &MenuProps) -> Html {
                     } else {
                         html! { <li><a onclick={onclick}>{ menu_third_item.clone().label }</a></li> }
                     }
-                })}
+                }).collect::<Html>()}
                 </ul>
             }
         } else {
@@ -65,7 +65,7 @@ pub fn menu(props: &MenuProps) -> Html {
             } else {
                 html! { <li><a onclick={onclick}>{ menu_second_item.clone().label }</a>{ third_level(menu_second_item.menu_list) }</li> }
             }
-        })
+        }).collect::<Html>()
     };
 
     // first level
@@ -73,16 +73,16 @@ pub fn menu(props: &MenuProps) -> Html {
         let menu_first_list = &menu_wrapper.menu;
         html! {
             <aside class="menu">
-            {for menu_first_list.iter().map(|menu_first_item| {
+            {menu_first_list.iter().map(|menu_first_item| {
                 html! {
                     <>
                         <p class="menu-label">{ menu_first_item.clone().menu_label }</p>
                         <ul class="menu-list">
-                            { for second_level(menu_first_item.clone().menu_list) }
+                            { second_level(menu_first_item.clone().menu_list) }
                         </ul>
                     </>
                 }
-            })}
+            }).collect::<Html>()}
             </aside>
         }
     } else {

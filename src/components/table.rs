@@ -66,13 +66,13 @@ where
         } else {
             html! {
                 {
-                    for data.iter().map(move |item| {
+                    data.iter().map(move |item| {
                         let all = all.clone();
                         let value = serde_json::to_value(item).unwrap();
                         html!{
                             <tr>
                                 {
-                                    for all.into_iter().map(|(_, td_name, _, centered)| {
+                                    all.into_iter().map(|(_, td_name, _, centered)| {
                                         let class = if centered {
                                             "has-text-centered"
                                         } else {
@@ -96,11 +96,11 @@ where
                                             } else {
                                                 html! { <td></td> }
                                             }
-                                    })
+                                    }).collect::<Html>()
                                 }
                             </tr>
                         }
-                    })
+                    }).collect::<Html>()
                 }
             }
         }

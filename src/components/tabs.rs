@@ -1,5 +1,5 @@
 use web_sys::{MouseEvent, HtmlButtonElement};
-use yew::{classes, function_component, html, Callback, Children, ChildrenWithProps, Properties, NodeRef};
+use yew::{classes, function_component, html, Callback, Children, ChildrenWithProps, Properties, NodeRef, Html};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct TabsProps {
@@ -28,7 +28,7 @@ pub fn tabs(props: &TabsProps) -> Html {
                 std::rc::Rc::make_mut(&mut tab.props).active = true;
             }
             tab
-        })
+        }).collect::<Html>()
     };
 
     // tab html
@@ -106,18 +106,18 @@ pub fn tabs(props: &TabsProps) -> Html {
                     </li>
                 }
             }
-        })
+        }).collect::<Html>()
     };
 
     html! {
         <>
             <div class="tabs is-boxed">
                 <ul>
-                    { for tab_html }
+                    { tab_html }
                 </ul>
             </div>
             <div class="container">
-                { for tab_container_children }
+                { tab_container_children }
             </div>
         </>
     }
