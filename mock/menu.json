@@ -30,6 +30,10 @@
                         {
                             "label": "Filters",
                             "name": "filters"
+                        },
+                        {
+                            "label": "Form",
+                            "name": "form"
                         }
                     ]
                 },
