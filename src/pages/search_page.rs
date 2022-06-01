@@ -58,7 +58,7 @@ pub fn search_page() -> Html {
 
         (
             list.into_iter()
-                .map(|info| SearchListInfoComponent::from(info))
+                .map(SearchListInfoComponent::from)
                 .collect::<Vec<SearchListInfoComponent>>(),
             list_info.count,
         )

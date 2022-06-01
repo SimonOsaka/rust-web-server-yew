@@ -68,7 +68,7 @@ pub fn table_page() -> Html {
 
         (
             list.into_iter()
-                .map(|info| ListInfoComponent::from(info))
+                .map(ListInfoComponent::from)
                 .collect::<Vec<ListInfoComponent>>(),
             list_info.count,
         )
