@@ -32,7 +32,6 @@ pub fn tabs(props: &TabsProps) -> Html {
     };
 
     // tab html
-    let children = children.clone();
     let tab_html = {
         children.iter().map(move|tab| {
             let onclick_delete = {

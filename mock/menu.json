@@ -34,6 +34,10 @@
                         {
                             "label": "Form",
                             "name": "form"
+                        },
+                        {
+                            "label": "Table",
+                            "name": "table"
                         }
                     ]
                 },

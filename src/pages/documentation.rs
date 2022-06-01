@@ -7,7 +7,7 @@ use crate::{
     pages::{
         chart_page::ChartPage, filters_page::FiltersPage, form_page::FormPage,
         general::dashboard::Dashboard, loading_page::LoadingPage, modal_page::ModalPage,
-        notification_page::NotificationPage,
+        notification_page::NotificationPage, table_page::TablePage,
     },
 };
 use yew::{
@@ -154,6 +154,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "form" => html_nested! {
             <Tab label="Form" name="form">
                 <FormPage />
+            </Tab>
+        },
+        "table" => html_nested! {
+            <Tab label="Table" name="table">
+                <TablePage />
             </Tab>
         },
         _ => panic!("No menu found"),

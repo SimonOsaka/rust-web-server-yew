@@ -95,10 +95,7 @@ pub fn form_page() -> Html {
         Callback::from(move |e: Event| {
             let radio: HtmlInputElement = e.target_unchecked_into();
             let mut value = (*form_value).clone();
-            value.yes = match radio.value().as_ref() {
-                "yes" => true,
-                _ => false,
-            };
+            value.yes = matches!(radio.value().as_ref(), "yes");
             form_value.set(value);
         })
     };

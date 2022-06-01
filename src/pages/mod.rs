@@ -11,3 +11,4 @@ pub mod notification_page;
 pub mod page_not_found;
 pub mod signin;
 pub mod signup;
+pub mod table_page;
