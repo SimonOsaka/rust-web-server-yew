@@ -10,6 +10,7 @@ use crate::{
     types::list::ListInfo,
 };
 use gloo::timers::future::TimeoutFuture;
+use serde::{Deserialize, Serialize};
 use yew::{function_component, html, props, use_effect_with_deps, use_state, Callback, Properties};
 use yew_agent::use_bridge;
 use yew_hooks::use_async;
@@ -26,11 +27,15 @@ pub fn table_page() -> Html {
             gloo_console::log!("async request list::all");
             // open loading
             let loading_props = LoadingProps::builder().loading(true).build();
+
             loading_agent.send(LoadingInput::Input(loading_props));
             TimeoutFuture::new(3000).await;
+
             let r = list::all(*current_page).await;
+
             // close loading
             let loading_props = LoadingProps::builder().loading(false).build();
+
             loading_agent.send(LoadingInput::Input(loading_props));
             r
         })
@@ -59,14 +64,21 @@ pub fn table_page() -> Html {
     };
 
     let (data, count) = if let Some(list_info) = &list_all.data {
-        (list_info.list.clone(), list_info.count)
+        let list = list_info.list.clone();
+
+        (
+            list.into_iter()
+                .map(|info| ListInfoComponent::from(info))
+                .collect::<Vec<ListInfoComponent>>(),
+            list_info.count,
+        )
     } else {
         (vec![], 0)
     };
 
     // table props
     let table_props = props! {
-         TableProps<ListInfo> {
+         TableProps<ListInfoComponent> {
             data,
         }
     };
@@ -80,18 +92,18 @@ pub fn table_page() -> Html {
 
     html! {
         <>
-            <Table<ListInfo> ..table_props>
+            <Table<ListInfoComponent> ..table_props>
                 <Td name="a" label="A" />
                 <Td name="b" label="B" />
                 <Td name="c" label="C" centered=true />
                 <Td name="d" label="D" width=200 centered=true />
-            </Table<ListInfo>>
+            </Table<ListInfoComponent>>
             <Pagination current={*current_page} ..pagination_props />
         </>
     }
 }
 
-impl TableData for ListInfo {
+impl TableData for ListInfoComponent {
     fn get_field_as_html(&self, field_name: &str) -> Option<yew::Html> {
         match field_name {
             "a" => Some(html! {
@@ -117,4 +129,21 @@ impl TableData for ListInfo {
     //         _ => None,
     //     }
     // }
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
+pub struct ListInfoComponent {
+    pub a: String,
+    pub b: String,
+    pub c: i32,
+}
+
+impl From<ListInfo> for ListInfoComponent {
+    fn from(info: ListInfo) -> Self {
+        Self {
+            a: info.a,
+            b: info.b,
+            c: info.c,
+        }
+    }
 }

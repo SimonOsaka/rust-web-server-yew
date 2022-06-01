@@ -6,3 +6,8 @@ use super::request::request_get;
 pub async fn all(page: usize) -> Result<ListInfoWrapper, Error> {
     request_get::<ListInfoWrapper>(format!("/list/{}", page)).await
 }
+
+/// Search list
+pub async fn search(query: &str) -> Result<ListInfoWrapper, Error> {
+    request_get::<ListInfoWrapper>(format!("/list/{}", query)).await
+}

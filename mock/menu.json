@@ -38,6 +38,10 @@
                         {
                             "label": "Table",
                             "name": "table"
+                        },
+                        {
+                            "label": "Search",
+                            "name": "search"
                         }
                     ]
                 },
