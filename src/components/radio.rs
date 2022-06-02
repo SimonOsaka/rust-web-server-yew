@@ -68,5 +68,9 @@ pub fn radio_group(props: &RadioGroupProps) -> Html {
             .collect::<Html>()
     };
 
-    html! {{ radio_group_html }}
+    html! {
+        <div class="control">
+            { radio_group_html }
+        </div>
+    }
 }

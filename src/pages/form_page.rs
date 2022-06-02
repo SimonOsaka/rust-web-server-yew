@@ -191,12 +191,10 @@ pub fn form_page() -> Html {
             </div>
 
             <div class="field">
-                <div class="control">
-                    <RadioGroup value={(*radio_value_str).clone()} callback={callback_yes}>
-                        <Radio label={"Yes"} value={"yes"} />
-                        <Radio label={"No"} value={"no"} />
-                    </RadioGroup>
-                </div>
+                <RadioGroup value={(*radio_value_str).clone()} callback={callback_yes}>
+                    <Radio label={"Yes"} value={"yes"} />
+                    <Radio label={"No"} value={"no"} />
+                </RadioGroup>
             </div>
 
             <div class="field is-grouped">
