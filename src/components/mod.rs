@@ -11,6 +11,7 @@ pub mod modal;
 pub mod navbar;
 pub mod notifications;
 pub mod pagination;
+pub mod radio;
 pub mod section;
 pub mod table;
 pub mod tabs;

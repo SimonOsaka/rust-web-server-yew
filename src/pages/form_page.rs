@@ -1,3 +1,4 @@
+use crate::components::radio::{Radio, RadioGroup};
 use serde::Serialize;
 use serde_json::json;
 use web_sys::{
@@ -20,6 +21,7 @@ pub struct FormValue {
 #[function_component(FormPage)]
 pub fn form_page() -> Html {
     let form_value = use_state(FormValue::default);
+    let radio_value_str = use_state(|| String::from(""));
 
     // name
     let oninput_name = {
@@ -90,12 +92,13 @@ pub fn form_page() -> Html {
     };
 
     // yes
-    let onchange_yes = {
+    let callback_yes = {
         let form_value = form_value.clone();
-        Callback::from(move |e: Event| {
-            let radio: HtmlInputElement = e.target_unchecked_into();
+        let radio_value_str = radio_value_str.clone();
+        Callback::from(move |radio_value: String| {
             let mut value = (*form_value).clone();
-            value.yes = matches!(radio.value().as_ref(), "yes");
+            value.yes = matches!(radio_value.as_ref(), "yes");
+            radio_value_str.set(radio_value);
             form_value.set(value);
         })
     };
@@ -189,14 +192,10 @@ pub fn form_page() -> Html {
 
             <div class="field">
                 <div class="control">
-                    <label class="radio">
-                        <input type="radio" name="question" value="yes" onchange={onchange_yes.clone()} checked={(*form_value).yes}/>
-                        {"Yes"}
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="question" value="no" onchange={onchange_yes} checked={!(*form_value).yes}/>
-                        {"No"}
-                    </label>
+                    <RadioGroup value={(*radio_value_str).clone()} callback={callback_yes}>
+                        <Radio label={"Yes"} value={"yes"} />
+                        <Radio label={"No"} value={"no"} />
+                    </RadioGroup>
                 </div>
             </div>
 
