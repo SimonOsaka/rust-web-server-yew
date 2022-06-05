@@ -13,3 +13,4 @@ pub mod search_page;
 pub mod signin;
 pub mod signup;
 pub mod table_page;
+pub mod table_tree_page;

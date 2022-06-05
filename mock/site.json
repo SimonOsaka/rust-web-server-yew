@@ -1,0 +1,35 @@
+[
+    {
+        "url": "/sites",
+        "method": "get",
+        "data": {
+            "list": [
+                {
+                    "id": 1,
+                    "domain": "abc.com",
+                    "level": 0
+                },
+                {
+                    "id": 2,
+                    "domain": "www.abc.com",
+                    "level": 1
+                },
+                {
+                    "id": 3,
+                    "domain": "dev.abc.com",
+                    "level": 1
+                },
+                {
+                    "id": 4,
+                    "domain": "test.abc.com",
+                    "level": 1
+                },
+                {
+                    "id": 5,
+                    "domain": "staging.abc.com",
+                    "level": 1
+                }
+            ]
+        }
+    }
+]

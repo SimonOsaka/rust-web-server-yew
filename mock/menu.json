@@ -42,6 +42,10 @@
                         {
                             "label": "Search",
                             "name": "search"
+                        },
+                        {
+                            "label": "Tree table",
+                            "name": "tree_table"
                         }
                     ]
                 },

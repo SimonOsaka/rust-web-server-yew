@@ -2,6 +2,7 @@ pub mod auth;
 pub mod list;
 pub mod menu;
 pub mod request;
+pub mod site;
 
 use gloo::storage::{LocalStorage, Storage};
 use once_cell::sync::Lazy;

@@ -113,6 +113,7 @@ pub(crate) fn mock(url: String, method: String) -> String {
         include_str!("../../mock/auth.json"),
         include_str!("../../mock/list.json"),
         include_str!("../../mock/menu.json"),
+        include_str!("../../mock/site.json"),
     ];
     for mock_json_str_include in mock_json_str_includes {
         let mock_json_value: serde_json::Value =
