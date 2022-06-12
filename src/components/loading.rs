@@ -23,7 +23,9 @@ pub fn loading(props: &LoadingProps) -> Html {
         <div class={cls}>
             <div class="modal-background"></div>
             <div class="modal-content">
-                <progress class="progress is-small is-primary" max="100"></progress>
+                <div class="box">
+                    <progress class="progress is-small is-primary" max="100"></progress>
+                </div>
             </div>
         </div>
     }
