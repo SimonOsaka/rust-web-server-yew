@@ -42,15 +42,6 @@
             "command": "workbench.action.tasks.runTask|trunk build --release",
             "alignment": "left",
             "priority": 7
-        },
-        {
-            "text": "Terminal",
-            "color": "orange",
-            "tooltip": "open a terminal in vscode",
-            "commandType": "palette",
-            "command": "workbench.action.terminal.toggleTerminal",
-            "alignment": "right",
-            "priority": 1000
         }
     ]
 }

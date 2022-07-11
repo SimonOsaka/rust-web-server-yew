@@ -1,4 +1,7 @@
-use crate::components::radio::{Radio, RadioGroup};
+use crate::components::{
+    button::{Button, ButtonColors},
+    radio::{Radio, RadioGroup},
+};
 use serde::Serialize;
 use serde_json::json;
 use web_sys::{
@@ -199,10 +202,10 @@ pub fn form_page() -> Html {
 
             <div class="field is-grouped">
                 <div class="control">
-                    <button class="button is-link" onclick={onclick_submit}>{"Submit"}</button>
+                    <Button color={ButtonColors::Link} callback={onclick_submit}>{"Submit"}</Button>
                 </div>
                 <div class="control">
-                    <button class="button is-link is-light">{"Cancel"}</button>
+                    <Button color={ButtonColors::Link} light={true}>{"Cancel"}</Button>
                 </div>
             </div>
         </>
