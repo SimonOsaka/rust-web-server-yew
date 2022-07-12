@@ -23,6 +23,8 @@ pub struct ButtonProps {
     pub outline: bool,
     #[prop_or(false)]
     pub light: bool,
+    #[prop_or(false)]
+    pub select: bool,
     #[prop_or_default]
     pub callback: Callback<MouseEvent>,
     #[prop_or_default]
@@ -44,6 +46,7 @@ pub fn button(props: &ButtonProps) -> Html {
         light,
         size,
         children,
+        select,
     } = props.clone();
 
     let mut cls = Classes::new();
@@ -90,6 +93,9 @@ pub fn button(props: &ButtonProps) -> Html {
     if light {
         cls.push("is-light");
     }
+    if select {
+        cls.push("is-selected");
+    }
 
     let onclick = {
         Callback::from(move |e: MouseEvent| {
@@ -103,6 +109,7 @@ pub fn button(props: &ButtonProps) -> Html {
 }
 
 #[derive(PartialEq, Clone, Debug)]
+#[allow(dead_code)]
 pub enum ButtonColors {
     Primary,
     Link,
@@ -114,6 +121,7 @@ pub enum ButtonColors {
 }
 
 #[derive(PartialEq, Clone, Debug)]
+#[allow(dead_code)]
 pub enum ButtonSize {
     Small,
     Normal,

@@ -5,6 +5,7 @@ use thiserror::Error as ThisError;
 
 /// Define all possible errors
 #[derive(ThisError, Clone, Debug, PartialEq)]
+#[allow(dead_code)]
 pub enum Error {
     /// 401
     #[error("Unauthorized")]

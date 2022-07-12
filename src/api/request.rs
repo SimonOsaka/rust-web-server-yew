@@ -74,6 +74,7 @@ where
 }
 
 /// Delete request
+#[allow(dead_code)]
 pub async fn request_delete<T>(url: String) -> Result<T, Error>
 where
     T: DeserializeOwned + 'static + std::fmt::Debug,
@@ -99,6 +100,7 @@ where
 }
 
 /// Put request with a body
+#[allow(dead_code)]
 pub async fn request_put<B, T>(url: String, body: B) -> Result<T, Error>
 where
     T: DeserializeOwned + 'static + std::fmt::Debug,
