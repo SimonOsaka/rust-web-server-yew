@@ -12,20 +12,12 @@
                             "name": "dashboard"
                         },
                         {
-                            "label": "Modal",
-                            "name": "modal"
+                            "label": "Button",
+                            "name": "button"
                         },
                         {
                             "label": "Chart",
                             "name": "chart"
-                        },
-                        {
-                            "label": "Notification",
-                            "name": "notification"
-                        },
-                        {
-                            "label": "Loading",
-                            "name": "loading"
                         },
                         {
                             "label": "Filters",
@@ -36,12 +28,24 @@
                             "name": "form"
                         },
                         {
-                            "label": "Table",
-                            "name": "table"
+                            "label": "Loading",
+                            "name": "loading"
+                        },
+                        {
+                            "label": "Modal",
+                            "name": "modal"
+                        },
+                        {
+                            "label": "Notification",
+                            "name": "notification"
                         },
                         {
                             "label": "Search",
                             "name": "search"
+                        },
+                        {
+                            "label": "Table",
+                            "name": "table"
                         },
                         {
                             "label": "Tree table",

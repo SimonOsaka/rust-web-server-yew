@@ -1,5 +1,7 @@
 use web_sys::MouseEvent;
-use yew::{function_component, html, Callback, Children, Classes, Properties};
+use yew::{
+    function_component, html, Callback, Children, ChildrenWithProps, Classes, Html, Properties,
+};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct ButtonProps {
@@ -25,6 +27,12 @@ pub struct ButtonProps {
     pub light: bool,
     #[prop_or(false)]
     pub select: bool,
+    #[prop_or(false)]
+    pub responsive: bool,
+    #[prop_or(false)]
+    pub fullwidth: bool,
+    #[prop_or(false)]
+    pub invert: bool,
     #[prop_or_default]
     pub callback: Callback<MouseEvent>,
     #[prop_or_default]
@@ -47,6 +55,9 @@ pub fn button(props: &ButtonProps) -> Html {
         size,
         children,
         select,
+        responsive,
+        fullwidth,
+        invert,
     } = props.clone();
 
     let mut cls = Classes::new();
@@ -60,6 +71,12 @@ pub fn button(props: &ButtonProps) -> Html {
         ButtonColors::Success => "is-success",
         ButtonColors::Warning => "is-warning",
         ButtonColors::Default => "",
+        ButtonColors::White => "is-white",
+        ButtonColors::Light => "is-light",
+        ButtonColors::Dark => "is-dark",
+        ButtonColors::Black => "is-black",
+        ButtonColors::Text => "is-text",
+        ButtonColors::Ghost => "is-ghost",
     };
     cls.push(color);
 
@@ -96,6 +113,15 @@ pub fn button(props: &ButtonProps) -> Html {
     if select {
         cls.push("is-selected");
     }
+    if responsive {
+        cls.push("is-responsive");
+    }
+    if fullwidth {
+        cls.push("is-fullwidth");
+    }
+    if invert {
+        cls.push("is-inverted");
+    }
 
     let onclick = {
         Callback::from(move |e: MouseEvent| {
@@ -117,6 +143,12 @@ pub enum ButtonColors {
     Success,
     Warning,
     Danger,
+    White,
+    Light,
+    Dark,
+    Black,
+    Text,
+    Ghost,
     Default,
 }
 
@@ -128,4 +160,126 @@ pub enum ButtonSize {
     Medium,
     Large,
     Default,
+}
+
+#[derive(Clone, Debug, PartialEq, Properties)]
+pub struct ButtonsProps {
+    #[prop_or(false)]
+    pub addon: bool,
+    #[prop_or(ButtonsAlignment::Left)]
+    pub alignment: ButtonsAlignment,
+    #[prop_or(ButtonsSize::Default)]
+    pub size: ButtonsSize,
+    #[prop_or_default]
+    pub children: ChildrenWithProps<Button>,
+}
+#[function_component(Buttons)]
+pub fn buttons(props: &ButtonsProps) -> Html {
+    let ButtonsProps {
+        children,
+        size,
+        addon,
+        alignment,
+    } = props.clone();
+
+    let mut cls = Classes::new();
+    cls.push("buttons");
+
+    let size = match size {
+        ButtonsSize::Small => "are-small",
+        ButtonsSize::Medium => "are-medium",
+        ButtonsSize::Large => "are-large",
+        ButtonsSize::Default => "",
+    };
+    cls.push(size);
+
+    if addon {
+        cls.push("has-addons");
+    }
+
+    let alignment = match alignment {
+        ButtonsAlignment::Center => "is-centered",
+        ButtonsAlignment::Right => "is-right",
+        ButtonsAlignment::Left => "",
+    };
+    cls.push(alignment);
+
+    let buttons_html = children.iter().map(|btn| html! {{btn}}).collect::<Html>();
+
+    html! {
+        <div class={cls}>
+            {buttons_html}
+        </div>
+    }
+}
+
+#[derive(PartialEq, Clone, Debug)]
+#[allow(dead_code)]
+pub enum ButtonsSize {
+    Small,
+    Medium,
+    Large,
+    Default,
+}
+
+#[derive(PartialEq, Clone, Debug)]
+#[allow(dead_code)]
+pub enum ButtonsAlignment {
+    Center,
+    Right,
+    Left,
+}
+
+#[derive(Clone, Debug, PartialEq, Properties)]
+pub struct ButtonGroupProps {
+    #[prop_or_default]
+    pub children: ChildrenWithProps<Button>,
+}
+#[function_component(ButtonGroup)]
+pub fn button_group(props: &ButtonGroupProps) -> Html {
+    let ButtonGroupProps { children } = props.clone();
+
+    let button_group_html = children
+        .iter()
+        .map(|btn| {
+            html! {
+                <div class="control">
+                    {btn}
+                </div>
+            }
+        })
+        .collect::<Html>();
+
+    html! {
+        <div class="field is-grouped">
+            {button_group_html}
+        </div>
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Properties)]
+pub struct ButtonAddonsProps {
+    #[prop_or_default]
+    pub children: ChildrenWithProps<Button>,
+}
+#[function_component(ButtonAddons)]
+pub fn button_addons(props: &ButtonAddonsProps) -> Html {
+    let ButtonAddonsProps { children } = props.clone();
+
+    let button_addons_html = children
+        .iter()
+        .map(|btn| {
+            html! {
+                <div class="control">
+                    {btn}
+                </div>
+            }
+        })
+        .collect::<Html>();
+
+    html! {
+        <div class="field has-addons">
+            {button_addons_html}
+        </div>
+    }
 }
