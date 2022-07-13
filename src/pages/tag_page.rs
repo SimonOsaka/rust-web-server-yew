@@ -1,4 +1,4 @@
-use crate::components::tag::{Tag, TagColors, Tags};
+use crate::components::tag::{GroupTags, Tag, TagColors, Tags};
 use yew::{function_component, html};
 
 #[function_component(TagPage)]
@@ -11,18 +11,32 @@ pub fn tag_page() -> Html {
                 <Tag>{"orange"}</Tag>
             </Tags>
 
-            <Tags addon={true}>
-                <Tag color={TagColors::Primary}>{"Rust"}</Tag>
-                <Tag>{"1.62.0"}</Tag>
-            </Tags>
+            <GroupTags>
+                <Tags addon={true}>
+                    <Tag color={TagColors::Primary}>{"Rust"}</Tag>
+                    <Tag>{"1.62.0"}</Tag>
+                </Tags>
+                <Tags addon={true}>
+                    <Tag color={TagColors::Info}>{"Yew"}</Tag>
+                    <Tag>{"1.19.3"}</Tag>
+                </Tags>
+                <Tags addon={true}>
+                    <Tag color={TagColors::Dark}>{"Bulma"}</Tag>
+                    <Tag>{"0.9.4"}</Tag>
+                </Tags>
+            </GroupTags>
 
-            <Tags addon={true} delete={true}>
-                <Tag color={TagColors::Danger}>{"orange"}</Tag>
-            </Tags>
-
-            <Tags addon={true} delete={true}>
-                <Tag color={TagColors::Link} tag_name={"a".to_string()}>{"banana"}</Tag>
-            </Tags>
+            <GroupTags>
+                <Tags addon={true} delete={true}>
+                    <Tag color={TagColors::Success}>{"apple"}</Tag>
+                </Tags>
+                <Tags addon={true} delete={true}>
+                    <Tag color={TagColors::Danger}>{"orange"}</Tag>
+                </Tags>
+                <Tags addon={true} delete={true}>
+                    <Tag color={TagColors::Link} tag_name={"a".to_string()}>{"banana"}</Tag>
+                </Tags>
+            </GroupTags>
         </>
     }
 }

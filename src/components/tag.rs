@@ -1,4 +1,4 @@
-use yew::{function_component, html, Children, Classes, Html, Properties};
+use yew::{function_component, html, Children, ChildrenWithProps, Classes, Html, Properties};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct TagProps {
@@ -140,6 +140,32 @@ pub fn tags(props: &TagsProps) -> Html {
         <div class={cls}>
             { children.iter().collect::<Html>() }
             { delete_html }
+        </div>
+    }
+}
+
+#[derive(Clone, Debug, PartialEq, Properties)]
+pub struct GroupTagsProps {
+    #[prop_or_default]
+    pub children: ChildrenWithProps<Tags>,
+}
+#[function_component(GroupTags)]
+pub fn group_tags(props: &GroupTagsProps) -> Html {
+    let GroupTagsProps { children } = props.clone();
+
+    let children_html = children
+        .iter()
+        .map(|x| {
+            html! {
+                <div class="control">
+                    {x}
+                </div>
+            }
+        })
+        .collect::<Html>();
+    html! {
+        <div class="field is-grouped is-grouped-multiline">
+            {children_html}
         </div>
     }
 }
