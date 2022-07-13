@@ -16,4 +16,5 @@ pub mod radio;
 pub mod section;
 pub mod table;
 pub mod tabs;
+pub mod tag;
 pub mod user_context_provider;

@@ -46,6 +46,10 @@
                         {
                             "label": "Tree table",
                             "name": "tree_table"
+                        },
+                        {
+                            "label": "Tag",
+                            "name": "tag"
                         }
                     ]
                 },
