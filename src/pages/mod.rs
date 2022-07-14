@@ -6,6 +6,7 @@ pub mod documentation;
 pub mod filters_page;
 pub mod form_page;
 pub mod home;
+pub mod image_page;
 pub mod loading_page;
 pub mod modal_page;
 pub mod notification_page;

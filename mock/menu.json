@@ -28,6 +28,10 @@
                             "name": "form"
                         },
                         {
+                            "label": "Image",
+                            "name": "image"
+                        },
+                        {
                             "label": "Loading",
                             "name": "loading"
                         },

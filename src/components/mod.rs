@@ -5,6 +5,7 @@ pub mod chart;
 pub mod filter;
 pub mod footer;
 pub mod hero;
+pub mod image;
 pub mod loading;
 pub mod media_object;
 pub mod menu;

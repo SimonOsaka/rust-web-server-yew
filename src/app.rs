@@ -37,22 +37,6 @@ pub fn app() -> Html {
 
                 <main class="container">
                     <Switch<Route> render={Switch::render(switch)} />
-                    // <BreadCrumb data={ [("Bulma".to_string(),false),("Documentation".to_string(),false),("Components".to_string(),false),("Breadcrumb".to_string(),true)].to_vec()}/>
-                    // <CardList/>
-
-                    // <Section/>
-
-                    // <Hero/>
-
-                    // <MediaObjectArticle/>
-                    // <MediaObjectPost/>
-                    // <MediaObjectNestPost/>
-
-
-
-
-                    // <ModalImage is_active=false/>
-                    // <ModalCard is_active=false/>
                     <Notifications />
                     <Loadings />
                 </main>
