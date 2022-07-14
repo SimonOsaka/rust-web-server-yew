@@ -6,10 +6,10 @@ use crate::{
     },
     pages::{
         button_page::ButtonPage, chart_page::ChartPage, dashboard::Dashboard,
-        filters_page::FiltersPage, form_page::FormPage, image_page::ImagePage,
-        loading_page::LoadingPage, modal_page::ModalPage, notification_page::NotificationPage,
-        search_page::SearchPage, table_page::TablePage, table_tree_page::TableTreePage,
-        tag_page::TagPage,
+        filters_page::FiltersPage, form_page::FormPage, icon_page::FontAwesomeIconPage,
+        image_page::ImagePage, loading_page::LoadingPage, modal_page::ModalPage,
+        notification_page::NotificationPage, search_page::SearchPage, table_page::TablePage,
+        table_tree_page::TableTreePage, tag_page::TagPage,
     },
 };
 use yew::{
@@ -186,6 +186,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "image" => html_nested! {
             <Tab label="Image" name="image">
                 <ImagePage />
+            </Tab>
+        },
+        "icon" => html_nested! {
+            <Tab label="Icon" name="icon">
+                <FontAwesomeIconPage />
             </Tab>
         },
         _ => panic!("No menu found"),

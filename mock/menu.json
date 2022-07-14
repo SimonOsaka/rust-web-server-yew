@@ -28,6 +28,10 @@
                             "name": "form"
                         },
                         {
+                            "label": "Icon",
+                            "name": "icon"
+                        },
+                        {
                             "label": "Image",
                             "name": "image"
                         },
