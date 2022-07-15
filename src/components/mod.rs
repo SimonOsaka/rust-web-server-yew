@@ -7,6 +7,7 @@ pub mod footer;
 pub mod hero;
 pub mod icon;
 pub mod image;
+pub mod input;
 pub mod loading;
 pub mod media_object;
 pub mod menu;

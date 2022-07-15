@@ -8,6 +8,7 @@ pub mod form_page;
 pub mod home;
 pub mod icon_page;
 pub mod image_page;
+pub mod input_page;
 pub mod loading_page;
 pub mod modal_page;
 pub mod notification_page;

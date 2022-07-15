@@ -36,6 +36,10 @@
                             "name": "image"
                         },
                         {
+                            "label": "Input",
+                            "name": "input"
+                        },
+                        {
                             "label": "Loading",
                             "name": "loading"
                         },
