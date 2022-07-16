@@ -59,7 +59,7 @@ pub fn input(props: &SelectProps) -> Html {
         </div>
     };
 
-    if icon.len() != 0 {
+    if !icon.is_empty() {
         let mut control_class = Classes::new();
         control_class.push("control");
         control_class.push("has-icons-left");
