@@ -20,6 +20,10 @@
                             "name": "chart"
                         },
                         {
+                            "label": "Checkbox",
+                            "name": "checkbox"
+                        },
+                        {
                             "label": "Filters",
                             "name": "filters"
                         },

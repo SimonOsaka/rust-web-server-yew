@@ -2,6 +2,7 @@ pub mod breadcrumb;
 pub mod button;
 pub mod card;
 pub mod chart;
+pub mod checkbox;
 pub mod filter;
 pub mod footer;
 pub mod hero;

@@ -5,12 +5,12 @@ use crate::{
         tabs::{Tab, Tabs, TabsProps},
     },
     pages::{
-        button_page::ButtonPage, chart_page::ChartPage, dashboard::Dashboard,
-        filters_page::FiltersPage, form_page::FormPage, icon_page::FontAwesomeIconPage,
-        image_page::ImagePage, input_page::InputPage, loading_page::LoadingPage,
-        modal_page::ModalPage, notification_page::NotificationPage, search_page::SearchPage,
-        select_page::SelectPage, table_page::TablePage, table_tree_page::TableTreePage,
-        tag_page::TagPage, textarea_page::TextareaPage,
+        button_page::ButtonPage, chart_page::ChartPage, checkbox_page::CheckboxPage,
+        dashboard::Dashboard, filters_page::FiltersPage, form_page::FormPage,
+        icon_page::FontAwesomeIconPage, image_page::ImagePage, input_page::InputPage,
+        loading_page::LoadingPage, modal_page::ModalPage, notification_page::NotificationPage,
+        search_page::SearchPage, select_page::SelectPage, table_page::TablePage,
+        table_tree_page::TableTreePage, tag_page::TagPage, textarea_page::TextareaPage,
     },
 };
 use yew::{
@@ -207,6 +207,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "select" => html_nested! {
             <Tab label="Select" name="select">
                 <SelectPage />
+            </Tab>
+        },
+        "checkbox" => html_nested! {
+            <Tab label="Checkbox" name="checkbox">
+                <CheckboxPage />
             </Tab>
         },
         _ => panic!("No menu found"),
