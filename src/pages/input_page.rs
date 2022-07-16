@@ -2,15 +2,19 @@ use crate::components::{
     icon::FontAwesomeIcon,
     input::{Input, InputSizes},
 };
-use yew::{function_component, html};
+use yew::{function_component, html, Callback};
 
 use crate::components::input::{InputColors, InputTypes};
 
 #[function_component(InputPage)]
 pub fn input_page() -> Html {
+    let callback = Callback::from(|str: String| {
+        gloo_console::log!(str);
+    });
+
     html! {
         <>
-            <Input placeholder={"placeholder"} />
+            <Input placeholder={"placeholder"} {callback} />
 
             <Input value={"i'm value"} />
 

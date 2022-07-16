@@ -1,4 +1,7 @@
-use yew::{function_component, html, ChildrenWithProps, Classes, Html, Properties};
+use web_sys::{HtmlInputElement, InputEvent};
+use yew::{
+    function_component, html, Callback, ChildrenWithProps, Classes, Html, Properties, TargetCast,
+};
 
 use super::icon::FontAwesomeIcon;
 
@@ -32,6 +35,8 @@ pub struct InputProps {
     pub icon_right: bool,
     #[prop_or_default]
     pub children: ChildrenWithProps<FontAwesomeIcon>,
+    #[prop_or_default]
+    pub callback: Callback<String>,
 }
 #[function_component(Input)]
 pub fn input(props: &InputProps) -> Html {
@@ -50,6 +55,7 @@ pub fn input(props: &InputProps) -> Html {
         icon_left,
         icon_right,
         children,
+        callback,
     } = props.clone();
 
     let mut input_class = Classes::new();
@@ -63,13 +69,20 @@ pub fn input(props: &InputProps) -> Html {
         input_class.push("is-rounded");
     }
 
+    let oninput = Callback::from(move |e: InputEvent| {
+        let input: HtmlInputElement = e.target_unchecked_into();
+        callback.emit(input.value());
+    });
+
     let input = html! {
-        <input class={input_class} type={input_type.get()} {placeholder} {value} disabled={disable} {readonly} />
+        <input class={input_class} type={input_type.get()} {placeholder} {value} disabled={disable} {readonly}
+        {oninput}/>
     };
 
     if control {
         let mut control_class = Classes::new();
         control_class.push("control");
+        control_class.push(input_size.get());
 
         if loading {
             control_class.push("is-loading");
