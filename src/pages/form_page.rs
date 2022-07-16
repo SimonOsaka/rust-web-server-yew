@@ -73,9 +73,9 @@ pub fn form_page() -> Html {
     };
 
     // message
-    let onchange_message = {
+    let oninput_message = {
         let form_value = form_value.clone();
-        Callback::from(move |e: Event| {
+        Callback::from(move |e: InputEvent| {
             let textarea: HtmlTextAreaElement = e.target_unchecked_into();
             let mut value = (*form_value).clone();
             value.message = textarea.value();
@@ -180,7 +180,7 @@ pub fn form_page() -> Html {
             <div class="field">
                 <label class="label">{"Message"}</label>
                 <div class="control">
-                    <textarea class="textarea" placeholder="Textarea" onchange={onchange_message}></textarea>
+                    <textarea class="textarea" placeholder="Textarea" oninput={oninput_message}></textarea>
                 </div>
             </div>
 

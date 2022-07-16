@@ -17,6 +17,7 @@ pub mod notifications;
 pub mod pagination;
 pub mod radio;
 pub mod section;
+pub mod select;
 pub mod table;
 pub mod tabs;
 pub mod tag;

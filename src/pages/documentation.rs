@@ -9,8 +9,8 @@ use crate::{
         filters_page::FiltersPage, form_page::FormPage, icon_page::FontAwesomeIconPage,
         image_page::ImagePage, input_page::InputPage, loading_page::LoadingPage,
         modal_page::ModalPage, notification_page::NotificationPage, search_page::SearchPage,
-        table_page::TablePage, table_tree_page::TableTreePage, tag_page::TagPage,
-        textarea_page::TextareaPage,
+        select_page::SelectPage, table_page::TablePage, table_tree_page::TableTreePage,
+        tag_page::TagPage, textarea_page::TextareaPage,
     },
 };
 use yew::{
@@ -202,6 +202,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "textarea" => html_nested! {
             <Tab label="Textarea" name="textarea">
                 <TextareaPage />
+            </Tab>
+        },
+        "select" => html_nested! {
+            <Tab label="Select" name="select">
+                <SelectPage />
             </Tab>
         },
         _ => panic!("No menu found"),

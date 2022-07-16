@@ -14,6 +14,7 @@ pub mod modal_page;
 pub mod notification_page;
 pub mod page_not_found;
 pub mod search_page;
+pub mod select_page;
 pub mod signin;
 pub mod signup;
 pub mod table_page;
