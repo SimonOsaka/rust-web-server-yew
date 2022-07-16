@@ -19,3 +19,4 @@ pub mod signup;
 pub mod table_page;
 pub mod table_tree_page;
 pub mod tag_page;
+pub mod textarea_page;

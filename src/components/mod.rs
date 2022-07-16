@@ -20,4 +20,5 @@ pub mod section;
 pub mod table;
 pub mod tabs;
 pub mod tag;
+pub mod textarea;
 pub mod user_context_provider;

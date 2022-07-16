@@ -10,6 +10,7 @@ use crate::{
         image_page::ImagePage, input_page::InputPage, loading_page::LoadingPage,
         modal_page::ModalPage, notification_page::NotificationPage, search_page::SearchPage,
         table_page::TablePage, table_tree_page::TableTreePage, tag_page::TagPage,
+        textarea_page::TextareaPage,
     },
 };
 use yew::{
@@ -196,6 +197,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "input" => html_nested! {
             <Tab label="Input" name="input">
                 <InputPage />
+            </Tab>
+        },
+        "textarea" => html_nested! {
+            <Tab label="Textarea" name="textarea">
+                <TextareaPage />
             </Tab>
         },
         _ => panic!("No menu found"),
