@@ -1,4 +1,4 @@
-use web_sys::{Event, HtmlInputElement};
+use web_sys::{HtmlInputElement, InputEvent};
 use yew::{function_component, html, Callback, ChildrenWithProps, Html, Properties, TargetCast};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
@@ -8,7 +8,7 @@ pub struct RadioProps {
     #[prop_or_default]
     pub value: String,
     #[prop_or(false)]
-    pub checked: bool,
+    pub check: bool,
     #[prop_or_default]
     pub callback: Callback<String>,
 }
@@ -18,12 +18,12 @@ pub fn radio(props: &RadioProps) -> Html {
     let RadioProps {
         label,
         value,
-        checked,
+        check,
         callback,
     } = props.clone();
 
-    let onchange = {
-        Callback::from(move |e: Event| {
+    let oninput = {
+        Callback::from(move |e: InputEvent| {
             let radio: HtmlInputElement = e.target_unchecked_into();
             callback.emit(radio.value())
         })
@@ -31,7 +31,7 @@ pub fn radio(props: &RadioProps) -> Html {
 
     html! {
         <label class="radio">
-            <input type="radio" {value} {onchange} {checked} />
+            <input type="radio" {value} {oninput} checked={check} />
             { label }
         </label>
     }
@@ -60,7 +60,7 @@ pub fn radio_group(props: &RadioGroupProps) -> Html {
             .iter()
             .map(move |mut radio| {
                 if radio.props.value == value {
-                    std::rc::Rc::make_mut(&mut radio.props).checked = true;
+                    std::rc::Rc::make_mut(&mut radio.props).check = true;
                 }
                 std::rc::Rc::make_mut(&mut radio.props).callback = callback.clone();
                 radio

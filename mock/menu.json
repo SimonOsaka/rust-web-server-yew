@@ -56,6 +56,10 @@
                             "name": "notification"
                         },
                         {
+                            "label": "Radio",
+                            "name": "radio"
+                        },
+                        {
                             "label": "Search",
                             "name": "search"
                         },
