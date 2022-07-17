@@ -1,4 +1,4 @@
-use yew::{function_component, html, use_state, Callback, Children, Classes, Html, Properties};
+use yew::{function_component, html, Callback, Children, Classes, Html, Properties};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct CheckboxProps {
@@ -27,24 +27,19 @@ pub fn checkbox(props: &CheckboxProps) -> Html {
         callback,
     } = props.clone();
 
-    let state = use_state(|| check);
-
     let mut checkbox_class = Classes::new();
     checkbox_class.push("checkbox");
     checkbox_class.push(extra_class);
 
     let onclick = {
-        let state = state.clone();
         Callback::from(move |_| {
-            let checked = *state.clone();
-            state.set(!checked);
-            callback.emit(!checked);
+            callback.emit(!check);
         })
     };
 
     html! {
         <label class={checkbox_class} disabled={disable}>
-            <input type="checkbox" {onclick} checked={*state} disabled={disable} />
+            <input type="checkbox" {onclick} checked={check} disabled={disable} />
             {children.iter().collect::<Html>()}
         </label>
     }

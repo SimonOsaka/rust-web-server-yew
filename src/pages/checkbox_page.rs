@@ -1,16 +1,21 @@
 use crate::components::checkbox::Checkbox;
-use yew::{function_component, html, Callback};
+use yew::{function_component, html, use_state, Callback};
 
 #[function_component(CheckboxPage)]
 pub fn checkbox_page() -> Html {
-    let callback = Callback::from(|checked: bool| {
-        gloo_console::log!(checked);
-    });
+    let state = use_state(|| false);
+    let callback = {
+        let state = state.clone();
+        Callback::from(move |checked: bool| {
+            gloo_console::log!(checked);
+            state.set(checked);
+        })
+    };
 
     html! {
         <>
             <div class="block">
-                <Checkbox {callback}>{"Remember me"}</Checkbox>
+                <Checkbox {callback} check={*state}>{"Remember me"}</Checkbox>
             </div>
 
             <div class="block">
