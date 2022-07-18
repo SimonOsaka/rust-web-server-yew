@@ -24,6 +24,10 @@
                             "name": "checkbox"
                         },
                         {
+                            "label": "Delete",
+                            "name": "delete"
+                        },
+                        {
                             "label": "Filters",
                             "name": "filters"
                         },

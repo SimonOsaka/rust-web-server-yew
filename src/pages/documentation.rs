@@ -6,12 +6,12 @@ use crate::{
     },
     pages::{
         button_page::ButtonPage, chart_page::ChartPage, checkbox_page::CheckboxPage,
-        dashboard::Dashboard, filters_page::FiltersPage, form_page::FormPage,
-        icon_page::FontAwesomeIconPage, image_page::ImagePage, input_page::InputPage,
-        loading_page::LoadingPage, modal_page::ModalPage, notification_page::NotificationPage,
-        radio_page::RadioPage, search_page::SearchPage, select_page::SelectPage,
-        table_page::TablePage, table_tree_page::TableTreePage, tag_page::TagPage,
-        textarea_page::TextareaPage,
+        dashboard::Dashboard, delete_page::DeletePage, filters_page::FiltersPage,
+        form_page::FormPage, icon_page::FontAwesomeIconPage, image_page::ImagePage,
+        input_page::InputPage, loading_page::LoadingPage, modal_page::ModalPage,
+        notification_page::NotificationPage, radio_page::RadioPage, search_page::SearchPage,
+        select_page::SelectPage, table_page::TablePage, table_tree_page::TableTreePage,
+        tag_page::TagPage, textarea_page::TextareaPage,
     },
 };
 use yew::{
@@ -218,6 +218,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "radio" => html_nested! {
             <Tab label="Radio" name="radio">
                 <RadioPage />
+            </Tab>
+        },
+        "delete" => html_nested! {
+            <Tab label="Delete" name="delete">
+                <DeletePage />
             </Tab>
         },
         _ => panic!("No menu found"),
