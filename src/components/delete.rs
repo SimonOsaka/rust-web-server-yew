@@ -24,7 +24,7 @@ pub fn delete(props: &ButtonProps) -> Html {
 
     let mut delete_class = Classes::new();
     delete_class.push("delete");
-    delete_class.push(size.to_string());
+    delete_class.push(size);
     delete_class.push(extra_class);
 
     let callback = Callback::from(move |e: MouseEvent| {

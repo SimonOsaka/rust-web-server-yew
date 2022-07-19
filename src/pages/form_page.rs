@@ -1,11 +1,12 @@
 use crate::components::{
-    button::{Button, ButtonColors},
+    button::Button,
     checkbox::Checkbox,
     icon::FontAwesomeIcon,
-    input::{Input, InputColors},
+    input::Input,
     radio::{Radio, RadioGroup},
     select::Select,
     textarea::Textarea,
+    Color,
 };
 use serde::Serialize;
 use serde_json::json;
@@ -123,7 +124,7 @@ pub fn form_page() -> Html {
 
             <div class="field">
                 <label class="label">{"Username"}</label>
-                <Input value={(*form_value).username.clone()} placeholder={"Username input"} input_color={InputColors::Success} control={true} icon_left={true}
+                <Input value={(*form_value).username.clone()} placeholder={"Username input"} color={Color::Success} control={true} icon_left={true}
                     icon_right={true} callback={callback_username}>
                     <FontAwesomeIcon icon={"fas fa-user"} extra_class={"is-left"} />
                     <FontAwesomeIcon icon={"fas fa-check"} extra_class={"is-right"} />
@@ -133,7 +134,7 @@ pub fn form_page() -> Html {
 
             <div class="field">
                 <label class="label">{"Email"}</label>
-                <Input value={(*form_value).email.clone()} placeholder={"Email input"} input_color={InputColors::Danger} control={true} icon_left={true}
+                <Input value={(*form_value).email.clone()} placeholder={"Email input"} color={Color::Danger} control={true} icon_left={true}
                     icon_right={true} callback={callback_email}>
                     <FontAwesomeIcon icon={"fas fa-envelope"} extra_class={"is-left"} />
                     <FontAwesomeIcon icon={"fas fa-exclamation-triangle"} extra_class={"is-right"} />
@@ -178,10 +179,10 @@ pub fn form_page() -> Html {
 
             <div class="field is-grouped">
                 <div class="control">
-                    <Button color={ButtonColors::Link} callback={callback_submit}>{"Submit"}</Button>
+                    <Button color={Color::Link} callback={callback_submit}>{"Submit"}</Button>
                 </div>
                 <div class="control">
-                    <Button color={ButtonColors::Link} light={true}>{"Cancel"}</Button>
+                    <Button color={Color::Link} light={true}>{"Cancel"}</Button>
                 </div>
             </div>
         </>

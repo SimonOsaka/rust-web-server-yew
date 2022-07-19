@@ -3,7 +3,7 @@ use yew::{
     function_component, html, Callback, ChildrenWithProps, Classes, Html, Properties, TargetCast,
 };
 
-use super::icon::FontAwesomeIcon;
+use super::{icon::FontAwesomeIcon, Color, Size};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct TextareaProps {
@@ -13,10 +13,10 @@ pub struct TextareaProps {
     pub rows: u8,
     #[prop_or(String::from(""))]
     pub placeholder: String,
-    #[prop_or(TextareaColors::Default)]
-    pub color: TextareaColors,
-    #[prop_or(TextareaSizes::Default)]
-    pub size: TextareaSizes,
+    #[prop_or(Color::Default)]
+    pub color: Color,
+    #[prop_or(Size::Default)]
+    pub size: Size,
     #[prop_or(false)]
     pub disable: bool,
     #[prop_or(false)]
@@ -51,8 +51,8 @@ pub fn input(props: &TextareaProps) -> Html {
 
     let mut textarea_class = Classes::new();
     textarea_class.push("textarea");
-    textarea_class.push(color.get());
-    textarea_class.push(size.get());
+    textarea_class.push(color);
+    textarea_class.push(size.clone());
     if resize {
         textarea_class.push("has-fixed-size");
     }
@@ -69,7 +69,7 @@ pub fn input(props: &TextareaProps) -> Html {
     if control {
         let mut control_class = Classes::new();
         control_class.push("control");
-        control_class.push(size.get());
+        control_class.push(size);
 
         if loading {
             control_class.push("is-loading");
@@ -83,53 +83,5 @@ pub fn input(props: &TextareaProps) -> Html {
         }
     } else {
         textarea
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-#[allow(dead_code)]
-pub enum TextareaColors {
-    Primary,
-    Link,
-    Info,
-    Success,
-    Warning,
-    Danger,
-    Default,
-}
-impl TextareaColors {
-    pub fn get(&self) -> String {
-        match self {
-            TextareaColors::Primary => "is-primary",
-            TextareaColors::Link => "is-link",
-            TextareaColors::Info => "is-info",
-            TextareaColors::Success => "is-success",
-            TextareaColors::Warning => "is-warning",
-            TextareaColors::Danger => "is-danger",
-            TextareaColors::Default => "",
-        }
-        .to_string()
-    }
-}
-
-#[derive(PartialEq, Clone, Debug)]
-#[allow(dead_code)]
-pub enum TextareaSizes {
-    Small,
-    Normal,
-    Medium,
-    Large,
-    Default,
-}
-impl TextareaSizes {
-    pub fn get(&self) -> String {
-        match self {
-            TextareaSizes::Small => "is-small",
-            TextareaSizes::Normal => "is-normal",
-            TextareaSizes::Medium => "is-medium",
-            TextareaSizes::Large => "is-large",
-            TextareaSizes::Default => "",
-        }
-        .to_string()
     }
 }

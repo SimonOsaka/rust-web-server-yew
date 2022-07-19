@@ -17,9 +17,11 @@ pub fn radio_page() -> Html {
             <div class="block">
                 <Radio label={"Yes"} value={"yes"} />
             </div>
+
             <div class="block">
                 <Radio label={"No"} value={"no"} check={true} />
             </div>
+
             <div class="block">
                 <RadioGroup {callback} value={(*state).clone()}>
                     <Radio label={"Yes"} value={"yes"} />

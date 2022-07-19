@@ -1,10 +1,7 @@
-use crate::components::{
-    icon::FontAwesomeIcon,
-    input::{Input, InputSizes},
-};
+use crate::components::{icon::FontAwesomeIcon, input::Input, Color, Size};
 use yew::{function_component, html, Callback};
 
-use crate::components::input::{InputColors, InputTypes};
+use crate::components::input::InputTypes;
 
 #[function_component(InputPage)]
 pub fn input_page() -> Html {
@@ -14,26 +11,44 @@ pub fn input_page() -> Html {
 
     html! {
         <>
-            <Input placeholder={"placeholder"} {callback} />
+            <div class="block">
+                <Input placeholder={"placeholder"} {callback} />
+            </div>
 
-            <Input value={"i'm value"} />
+            <div class="block">
+                <Input value={"i'm value"} />
+            </div>
 
-            <Input value={"i'm value"} disable={true} />
+            <div class="block">
+                <Input value={"i'm value"} disable={true} />
+            </div>
 
-            <Input value={"i'm value"} readonly={true} input_static={true} />
+            <div class="block">
+                <Input value={"i'm value"} readonly={true} input_static={true} />
+            </div>
 
-            <Input input_color={InputColors::Primary} placeholder={"Primary color"} />
+            <div class="block">
+                <Input color={Color::Primary} placeholder={"Primary color"} />
+            </div>
 
-            <Input input_type={InputTypes::Password} placeholder={"Password type"}/>
+            <div class="block">
+                <Input input_type={InputTypes::Password} placeholder={"Password type"}/>
+            </div>
 
-            <Input input_size={InputSizes::Large} placeholder={"Large size"}/>
+            <div class="block">
+                <Input size={Size::Large} placeholder={"Large size"}/>
+            </div>
 
-            <Input placeholder={"placeholder"} control={true} loading={true} />
+            <div class="block">
+                <Input placeholder={"placeholder"} control={true} loading={true} />
+            </div>
 
-            <Input placeholder={"placeholder"} control={true} icon_left={true} icon_right={true}>
-                <FontAwesomeIcon icon={"fas fa-envelope"} extra_class={"is-left"}/>
-                <FontAwesomeIcon icon={"fas fa-check"} extra_class={"is-right"}/>
-            </Input>
+            <div class="block">
+                <Input placeholder={"placeholder"} control={true} icon_left={true} icon_right={true}>
+                    <FontAwesomeIcon icon={"fas fa-envelope"} extra_class={"is-left"}/>
+                    <FontAwesomeIcon icon={"fas fa-check"} extra_class={"is-right"}/>
+                </Input>
+            </div>
         </>
     }
 }

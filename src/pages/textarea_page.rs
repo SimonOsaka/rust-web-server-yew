@@ -1,7 +1,5 @@
-use crate::components::textarea::Textarea;
+use crate::components::{textarea::Textarea, Color, Size};
 use yew::{function_component, html, Callback};
-
-use crate::components::textarea::{TextareaColors, TextareaSizes};
 
 #[function_component(TextareaPage)]
 pub fn textarea_page() -> Html {
@@ -10,20 +8,34 @@ pub fn textarea_page() -> Html {
     });
 
     html! {
-        <>
-            <Textarea placeholder={"placeholder"} {callback} />
+       <>
+            <div class="block">
+               <Textarea placeholder={"placeholder"} {callback} />
+            </div>
 
-            <Textarea value={"i'm value"} />
+            <div class="block">
+                <Textarea value={"i'm value"} />
+            </div>
 
-            <Textarea value={"i'm value"} disable={true} />
+            <div class="block">
+                <Textarea value={"i'm value"} disable={true} />
+            </div>
 
-            <Textarea value={"i'm value"} readonly={true} />
+            <div class="block">
+                <Textarea value={"i'm value"} readonly={true} />
+            </div>
 
-            <Textarea color={TextareaColors::Primary} placeholder={"Primary color"} />
+            <div class="block">
+                <Textarea color={Color::Primary} placeholder={"Primary color"} />
+            </div>
 
-            <Textarea size={TextareaSizes::Large} placeholder={"Large size"}/>
+            <div class="block">
+                <Textarea size={Size::Large} placeholder={"Large size"}/>
+            </div>
 
-            <Textarea placeholder={"placeholder"} control={true} loading={true} />
+            <div class="block">
+                <Textarea placeholder={"placeholder"} control={true} loading={true} />
+            </div>
         </>
     }
 }

@@ -1,5 +1,7 @@
-use crate::components::button::{
-    Button, ButtonAddons, ButtonColors, ButtonGroup, Buttons, ButtonsSize,
+use crate::components::{
+    button::{Button, ButtonAddons, ButtonGroup, Buttons, ButtonsSize},
+    icon::{FontAwesomeIcon, FontAwesomeIconText},
+    Color,
 };
 use web_sys::MouseEvent;
 use yew::{function_component, html, Callback};
@@ -15,39 +17,44 @@ pub fn button_page() -> Html {
 
     html! {
         <>
-            <Button color={ButtonColors::Link} {callback}>{"Submit"}</Button>
-            <Button color={ButtonColors::Link} light={true}>{"Cancel"}</Button>
+            <div class="block">
+                <Button color={Color::Link} {callback}>{"Submit"}</Button>
+                <Button color={Color::Link} light={true}>{"Cancel"}</Button>
+            </div>
 
-            <Buttons size={ButtonsSize::Large}>
-                <Button color={ButtonColors::Link}>{"Submit"}</Button>
-                <Button color={ButtonColors::Link} light={true}>{"Cancel"}</Button>
-            </Buttons>
+            <div class="block">
+                <Buttons size={ButtonsSize::Large}>
+                    <Button color={Color::Link}>{"Submit"}</Button>
+                    <Button color={Color::Link} light={true}>{"Cancel"}</Button>
+                </Buttons>
+            </div>
 
-            <ButtonGroup>
-                <Button color={ButtonColors::Link}>{"Submit"}</Button>
-                <Button color={ButtonColors::Link} light={true}>{"Cancel"}</Button>
-            </ButtonGroup>
+            <div class="block">
+                <ButtonGroup>
+                    <Button color={Color::Link}>{"Submit"}</Button>
+                    <Button color={Color::Link} light={true}>{"Cancel"}</Button>
+                </ButtonGroup>
+            </div>
 
-            <ButtonAddons>
-                <Button>
-                    <span class="icon is-small">
-                        <i class="fas fa-align-left"></i>
-                    </span>
-                    <span>{"Left"}</span>
-                </Button>
-                <Button color={ButtonColors::Primary}>
-                    <span class="icon is-small">
-                        <i class="fas fa-align-center"></i>
-                    </span>
-                    <span>{"Center"}</span>
-                </Button>
-                <Button>
-                    <span class="icon is-small">
-                        <i class="fas fa-align-right"></i>
-                    </span>
-                    <span>{"Right"}</span>
-                </Button>
-            </ButtonAddons>
+            <div class="block">
+                <ButtonAddons>
+                    <Button>
+                        <FontAwesomeIconText text={"Left"}>
+                            <FontAwesomeIcon icon={"fas fa-align-left"} extra_class={"is-small"} />
+                        </FontAwesomeIconText>
+                    </Button>
+                    <Button color={Color::Primary}>
+                        <FontAwesomeIconText text={"Center"}>
+                            <FontAwesomeIcon icon={"fas fa-align-center"} extra_class={"is-small"} />
+                        </FontAwesomeIconText>
+                    </Button>
+                    <Button>
+                        <FontAwesomeIconText text={"Right"}>
+                            <FontAwesomeIcon icon={"fas fa-align-right"} extra_class={"is-small"} />
+                        </FontAwesomeIconText>
+                    </Button>
+                </ButtonAddons>
+            </div>
         </>
     }
 }

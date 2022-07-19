@@ -1,11 +1,13 @@
 use yew::{function_component, html, Children, ChildrenWithProps, Classes, Html, Properties};
 
+use super::{Color, Size};
+
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct TagProps {
-    #[prop_or(TagColors::Default)]
-    pub color: TagColors,
-    #[prop_or(TagSize::Default)]
-    pub size: TagSize,
+    #[prop_or(Color::Default)]
+    pub color: Color,
+    #[prop_or(Size::Default)]
+    pub size: Size,
     #[prop_or(false)]
     pub round: bool,
     #[prop_or(false)]
@@ -32,28 +34,7 @@ pub fn tag(props: &TagProps) -> Html {
 
     let mut cls = Classes::new();
     cls.push("tag");
-
-    let color = match color {
-        TagColors::Primary => "is-primary",
-        TagColors::Danger => "is-danger",
-        TagColors::Info => "is-info",
-        TagColors::Link => "is-link",
-        TagColors::Success => "is-success",
-        TagColors::Warning => "is-warning",
-        TagColors::Black => "is-black",
-        TagColors::Dark => "is-dark",
-        TagColors::Light => "is-light",
-        TagColors::White => "is-white",
-        TagColors::Default => "",
-    };
     cls.push(color);
-
-    let size = match size {
-        TagSize::Normal => "is-normal",
-        TagSize::Medium => "is-medium",
-        TagSize::Large => "is-large",
-        TagSize::Default => "",
-    };
     cls.push(size);
 
     if round {
@@ -77,31 +58,6 @@ pub fn tag(props: &TagProps) -> Html {
             { delete_html }
         </@>
     }
-}
-
-#[derive(PartialEq, Clone, Debug)]
-#[allow(dead_code)]
-pub enum TagColors {
-    Black,
-    Dark,
-    Light,
-    White,
-    Primary,
-    Link,
-    Info,
-    Success,
-    Warning,
-    Danger,
-    Default,
-}
-
-#[derive(PartialEq, Clone, Debug)]
-#[allow(dead_code)]
-pub enum TagSize {
-    Normal,
-    Medium,
-    Large,
-    Default,
 }
 
 #[derive(Clone, Debug, PartialEq, Properties)]

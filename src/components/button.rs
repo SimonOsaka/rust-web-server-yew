@@ -3,12 +3,14 @@ use yew::{
     function_component, html, Callback, Children, ChildrenWithProps, Classes, Html, Properties,
 };
 
+use super::{Color, Size};
+
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct ButtonProps {
-    #[prop_or(ButtonColors::Default)]
-    pub color: ButtonColors,
-    #[prop_or(ButtonSize::Default)]
-    pub size: ButtonSize,
+    #[prop_or(Color::Default)]
+    pub color: Color,
+    #[prop_or(Size::Default)]
+    pub size: Size,
     #[prop_or(false)]
     pub disable: bool,
     #[prop_or(false)]
@@ -63,30 +65,7 @@ pub fn button(props: &ButtonProps) -> Html {
     let mut cls = Classes::new();
 
     cls.push("button");
-    let color = match color {
-        ButtonColors::Primary => "is-primary",
-        ButtonColors::Danger => "is-danger",
-        ButtonColors::Info => "is-info",
-        ButtonColors::Link => "is-link",
-        ButtonColors::Success => "is-success",
-        ButtonColors::Warning => "is-warning",
-        ButtonColors::Default => "",
-        ButtonColors::White => "is-white",
-        ButtonColors::Light => "is-light",
-        ButtonColors::Dark => "is-dark",
-        ButtonColors::Black => "is-black",
-        ButtonColors::Text => "is-text",
-        ButtonColors::Ghost => "is-ghost",
-    };
     cls.push(color);
-
-    let size = match size {
-        ButtonSize::Small => "is-small",
-        ButtonSize::Normal => "is-normal",
-        ButtonSize::Medium => "is-medium",
-        ButtonSize::Large => "is-large",
-        ButtonSize::Default => "",
-    };
     cls.push(size);
 
     if loading {
@@ -132,34 +111,6 @@ pub fn button(props: &ButtonProps) -> Html {
     html! {
         <button class={ cls } { onclick } disabled={ disable }>{ for children }</button>
     }
-}
-
-#[derive(PartialEq, Clone, Debug)]
-#[allow(dead_code)]
-pub enum ButtonColors {
-    Primary,
-    Link,
-    Info,
-    Success,
-    Warning,
-    Danger,
-    White,
-    Light,
-    Dark,
-    Black,
-    Text,
-    Ghost,
-    Default,
-}
-
-#[derive(PartialEq, Clone, Debug)]
-#[allow(dead_code)]
-pub enum ButtonSize {
-    Small,
-    Normal,
-    Medium,
-    Large,
-    Default,
 }
 
 #[derive(Clone, Debug, PartialEq, Properties)]

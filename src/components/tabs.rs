@@ -7,17 +7,17 @@ pub struct TabsProps {
     pub current: String,
     #[prop_or_default]
     pub children: ChildrenWithProps<Tab>,
-    pub callback: Callback<String>,
-    pub callback_delete: Callback<String>,
+    pub callback_click_tab: Callback<String>,
+    pub callback_remove_tab: Callback<String>,
 }
 
 #[function_component(Tabs)]
 pub fn tabs(props: &TabsProps) -> Html {
     let TabsProps {
         current,
-        callback,
+        callback_click_tab,
         children,
-        callback_delete,
+        callback_remove_tab,
     } = props;
 
     // pass children value
@@ -25,6 +25,7 @@ pub fn tabs(props: &TabsProps) -> Html {
     let tab_container_children = {
         children.iter().map(|mut tab| {
             if !current.is_empty() && *current == tab.props.name {
+                gloo_console::log!(format!("current tab is {}, tab.props.name is {}", (*current).clone(), tab.props.name.clone()));
                 std::rc::Rc::make_mut(&mut tab.props).active = true;
             }
             tab
@@ -34,12 +35,12 @@ pub fn tabs(props: &TabsProps) -> Html {
     // tab html
     let tab_html = {
         children.iter().map(move|tab| {
-            let onclick_delete = {
-                let callback_delete = callback_delete.clone();
+            let onclick_remove_tab = {
+                let callback_remove_tab = callback_remove_tab.clone();
                 let tab = tab.props.name.clone();
                 Callback::once(move |e: MouseEvent| {
-                    e.prevent_default();
-                    callback_delete.emit(tab)
+                    e.stop_propagation();
+                    callback_remove_tab.emit(tab)
                 })
             };
 
@@ -48,17 +49,18 @@ pub fn tabs(props: &TabsProps) -> Html {
             if !current.is_empty() && *current == tab.props.name {
                 html! {
                     <li class="is-active">
-                        <a>{ tab.props.label.clone() }<button class="delete is-small ml-1" onclick={onclick_delete}></button>
+                        <a>{ tab.props.label.clone() }<button class="delete is-small ml-1" onclick={onclick_remove_tab}></button>
                         </a>
                     </li>
                 }
             } else {
-                let callback = callback.clone();
+                let callback_click_tab = callback_click_tab.clone();
                 let onclick_tab = {
                     let tab = tab.props.name.clone();
                     Callback::once(move |e: MouseEvent| {
-                        e.prevent_default();
-                        callback.emit(tab)
+                        e.stop_propagation();
+                        gloo_console::log!(format!("onclick_tab: click {}", tab));
+                        callback_click_tab.emit(tab)
                     })
                 };
 
@@ -100,7 +102,7 @@ pub fn tabs(props: &TabsProps) -> Html {
 
                 html! { 
                     <li onmouseover={onmouseover_delete} onmouseout={onmouseout_delete}>
-                        <a onclick={onclick_tab}>{ tab.props.label.clone() }<button ref={el_ref} class="delete is-small ml-1 is-invisible" onclick={onclick_delete} {onanimationend}></button>
+                        <a onclick={onclick_tab}>{ tab.props.label.clone() }<button ref={el_ref} class="delete is-small ml-1 is-invisible" onclick={onclick_remove_tab} {onanimationend}></button>
                         </a>
                     </li>
                 }

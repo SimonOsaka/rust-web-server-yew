@@ -14,6 +14,7 @@ use crate::{
         tag_page::TagPage, textarea_page::TextareaPage,
     },
 };
+use linked_hash_map::LinkedHashMap;
 use yew::{
     function_component, html, html_nested, props, use_state, virtual_dom::VChild, Callback,
     FunctionComponent,
@@ -32,74 +33,71 @@ pub fn documentation() -> Html {
 
     // tabs
     let current_tab = use_state(|| "".to_string());
-    let menu_tab = use_state(Vec::<String>::new);
     let current_menu = use_state(|| "".to_string());
-    let tabs_toggle_callback = {
+
+    let tabs_map = use_state(
+        LinkedHashMap::<String, VChild<FunctionComponent<crate::components::tabs::tab>>>::new,
+    );
+
+    let tab_click_callback = {
         let current_tab = current_tab.clone();
         Callback::from(move |tab| {
             gloo_console::log!(format!("toggle tab = {}", tab));
             current_tab.set(tab);
         })
     };
-    let tabs_delete_callback = {
+    let tab_remove_callback = {
         let current_tab = current_tab.clone();
-        let current_menu = current_menu.clone();
-        let menu_tab = menu_tab.clone();
-        Callback::from(move |tab| {
+        // let current_menu = current_menu.clone();
+        let tabs_map = tabs_map.clone();
+        Callback::from(move |tab: String| {
             gloo_console::log!(format!("delete tab = {}", tab));
             // remove tab menu
-            let mut mt = (*menu_tab).clone();
-            if mt.contains(&tab) {
-                for (i, item) in mt.iter().enumerate() {
-                    if *item == tab {
-                        mt.remove(i);
-                        break;
-                    }
+            let mut map = (*tabs_map).clone();
+            if map.contains_key(&tab) {
+                map.remove(&tab);
+                let first = map.front();
+                let first_tab = first.map(|(key, _)| key.to_owned());
+                tabs_map.set(map);
+                if let Some(t) = first_tab {
+                    gloo_console::log!(format!("current tab is '{}' after delete {}", t, tab));
+                    current_tab.set(t);
                 }
-                menu_tab.set(mt.clone());
-                let s = if let Some(t) = mt.first() {
-                    t.to_string()
-                } else {
-                    "".to_string()
-                };
-                current_tab.set(s.clone());
-                current_menu.set(s);
             }
         })
     };
     let tabs_props = props! {
         TabsProps {
-            callback: tabs_toggle_callback,
-            callback_delete: tabs_delete_callback
+            callback_click_tab: tab_click_callback,
+            callback_remove_tab: tab_remove_callback
         }
     };
 
     // menu
-    let menu_callback = {
+    let menu_click_callback = {
         let current_menu = current_menu.clone();
         let current_tab = current_tab.clone();
-        let menu_tab = menu_tab.clone();
+        // let menu_tab = menu_tab.clone();
+        let tabs_map = tabs_map.clone();
         Callback::from(move |menu: String| {
             gloo_console::log!(format!("menu = {}", menu));
             current_menu.set(menu.clone());
-            //  add a menu
-            let mut mt = (*menu_tab).clone();
-            if !mt.contains(&menu) {
-                mt.push(menu.clone());
-                menu_tab.set(mt);
-            }
+            // add a tab and container
+            let mut map = (*tabs_map).clone();
+            map.insert(menu.clone(), get_menu(menu.clone()));
+            tabs_map.set(map);
             current_tab.set(menu);
         })
     };
 
     let menu_tab_html = {
-        let menu_tab = (*menu_tab).clone();
-        menu_tab.into_iter().map(get_menu)
+        let map = (*tabs_map).clone();
+        map.into_iter().map(|(_, value)| value)
     };
 
     let menu_props = MenuProps {
         current: (*current_menu).clone(),
-        callback: menu_callback,
+        callback: menu_click_callback,
     };
 
     html! {

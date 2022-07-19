@@ -3,7 +3,7 @@ use yew::{
     function_component, html, Callback, ChildrenWithProps, Classes, Html, Properties, TargetCast,
 };
 
-use super::icon::FontAwesomeIcon;
+use super::{icon::FontAwesomeIcon, Color, Size};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct InputProps {
@@ -11,10 +11,10 @@ pub struct InputProps {
     pub value: String,
     #[prop_or(InputTypes::Text)]
     pub input_type: InputTypes,
-    #[prop_or(InputColors::Default)]
-    pub input_color: InputColors,
-    #[prop_or(InputSizes::Default)]
-    pub input_size: InputSizes,
+    #[prop_or(Color::Default)]
+    pub color: Color,
+    #[prop_or(Size::Default)]
+    pub size: Size,
     #[prop_or(String::from(""))]
     pub placeholder: String,
     #[prop_or(false)]
@@ -43,8 +43,8 @@ pub fn input(props: &InputProps) -> Html {
     let InputProps {
         value,
         input_type,
-        input_color,
-        input_size,
+        color,
+        size,
         placeholder,
         disable,
         readonly,
@@ -60,8 +60,8 @@ pub fn input(props: &InputProps) -> Html {
 
     let mut input_class = Classes::new();
     input_class.push("input");
-    input_class.push(input_color.get());
-    input_class.push(input_size.get());
+    input_class.push(color);
+    input_class.push(size.clone());
     if input_static {
         input_class.push("is-static");
     }
@@ -82,7 +82,7 @@ pub fn input(props: &InputProps) -> Html {
     if control {
         let mut control_class = Classes::new();
         control_class.push("control");
-        control_class.push(input_size.get());
+        control_class.push(size);
 
         if loading {
             control_class.push("is-loading");
@@ -121,54 +121,6 @@ impl InputTypes {
             InputTypes::Password => "password",
             InputTypes::Email => "email",
             InputTypes::Tel => "tel",
-        }
-        .to_string()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-#[allow(dead_code)]
-pub enum InputColors {
-    Primary,
-    Link,
-    Info,
-    Success,
-    Warning,
-    Danger,
-    Default,
-}
-impl InputColors {
-    pub fn get(&self) -> String {
-        match self {
-            InputColors::Primary => "is-primary",
-            InputColors::Link => "is-link",
-            InputColors::Info => "is-info",
-            InputColors::Success => "is-success",
-            InputColors::Warning => "is-warning",
-            InputColors::Danger => "is-danger",
-            InputColors::Default => "",
-        }
-        .to_string()
-    }
-}
-
-#[derive(PartialEq, Clone, Debug)]
-#[allow(dead_code)]
-pub enum InputSizes {
-    Small,
-    Normal,
-    Medium,
-    Large,
-    Default,
-}
-impl InputSizes {
-    pub fn get(&self) -> String {
-        match self {
-            InputSizes::Small => "is-small",
-            InputSizes::Normal => "is-normal",
-            InputSizes::Medium => "is-medium",
-            InputSizes::Large => "is-large",
-            InputSizes::Default => "",
         }
         .to_string()
     }

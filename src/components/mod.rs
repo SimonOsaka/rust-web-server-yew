@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use yew::Classes;
 
 pub mod breadcrumb;
 pub mod button;
@@ -38,15 +38,54 @@ pub enum Size {
     Default,
 }
 
-impl Display for Size {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let class = match self {
+impl From<Size> for Classes {
+    fn from(size: Size) -> Self {
+        let class = match size {
             Size::Small => "is-small",
             Size::Normal => "is-normal",
             Size::Medium => "is-medium",
             Size::Large => "is-large",
             Size::Default => "",
         };
-        f.write_str(class)
+        Self::from(class)
+    }
+}
+
+#[derive(PartialEq, Clone, Debug)]
+#[allow(dead_code)]
+pub enum Color {
+    Primary,
+    Link,
+    Info,
+    Success,
+    Warning,
+    Danger,
+    White,
+    Light,
+    Dark,
+    Black,
+    Text,
+    Ghost,
+    Default,
+}
+
+impl From<Color> for Classes {
+    fn from(color: Color) -> Self {
+        let class = match color {
+            Color::Primary => "is-primary",
+            Color::Danger => "is-danger",
+            Color::Info => "is-info",
+            Color::Link => "is-link",
+            Color::Success => "is-success",
+            Color::Warning => "is-warning",
+            Color::Default => "",
+            Color::White => "is-white",
+            Color::Light => "is-light",
+            Color::Dark => "is-dark",
+            Color::Black => "is-black",
+            Color::Text => "is-text",
+            Color::Ghost => "is-ghost",
+        };
+        Self::from(class)
     }
 }
