@@ -20,24 +20,27 @@ pub fn table_page() -> Html {
     let loading_agent = use_bridge::<LoadingAgent, _>(|_| {});
 
     let current_page = use_state(|| 1usize);
+    // let request_approve = use_state(|| true);
 
     let list_all = {
         let current_page = current_page.clone();
+        // let request_approve = request_approve.clone();
         use_async(async move {
             gloo_console::log!("async request list::all");
             // open loading
             let loading_props = LoadingProps::builder().loading(true).build();
-
             loading_agent.send(LoadingInput::Input(loading_props));
             TimeoutFuture::new(3000).await;
 
-            let r = list::all(*current_page).await;
+            let result = list::all(*current_page).await;
 
             // close loading
             let loading_props = LoadingProps::builder().loading(false).build();
-
             loading_agent.send(LoadingInput::Input(loading_props));
-            r
+
+            // request_approve.set(false);
+
+            result
         })
     };
 
@@ -50,16 +53,19 @@ pub fn table_page() -> Html {
 
                 || ()
             },
+            // (*current_page, *request_approve),
             *current_page,
         );
     }
 
     // pagination props
-    let callback = {
+    let pagination_click_callback = {
         let current_page = current_page.clone();
+        // let request_approve = request_approve.clone();
         Callback::from(move |page| {
             gloo_console::log!(format!("page = {}", page));
             current_page.set(page);
+            // request_approve.set(true);
         })
     };
 
@@ -86,7 +92,7 @@ pub fn table_page() -> Html {
     let pagination_props = props! {
         PaginationProps {
             total: count,
-            callback
+            callback: pagination_click_callback
         }
     };
 

@@ -1,5 +1,5 @@
 use web_sys::{MouseEvent, HtmlButtonElement};
-use yew::{classes, function_component, html, Callback, Children, ChildrenWithProps, Properties, NodeRef, Html};
+use yew::{function_component, html, Callback, Children, ChildrenWithProps, Properties, NodeRef, Html, Classes};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct TabsProps {
@@ -34,7 +34,7 @@ pub fn tabs(props: &TabsProps) -> Html {
 
     // tab html
     let tab_html = {
-        children.iter().map(move|tab| {
+        children.into_iter().map(move|tab| {
             let onclick_remove_tab = {
                 let callback_remove_tab = callback_remove_tab.clone();
                 let tab = tab.props.name.clone();
@@ -135,12 +135,14 @@ pub struct TabProps {
 }
 #[function_component(Tab)]
 pub fn tab(props: &TabProps) -> Html {
-    gloo_console::log!(format!("{} active: {}", props.label, props.active));
-    let classes = if !props.active {
-        classes!("is-hidden")
-    } else {
-        classes!("")
-    };
+    let TabProps { label, name: _, active, children } = props.clone();
 
-    html! { <div class={classes}>{ props.children.clone() }</div> }
+    gloo_console::log!(format!("{} active: {}", label, active));
+    
+    let mut classes = Classes::new();
+    if !active {
+        classes.push("is-hidden");
+    }
+
+    html! { <div class={classes}>{ children }</div> }
 }
