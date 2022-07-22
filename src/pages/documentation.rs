@@ -10,8 +10,8 @@ use crate::{
         form_page::FormPage, icon_page::FontAwesomeIconPage, image_page::ImagePage,
         input_page::InputPage, loading_page::LoadingPage, modal_page::ModalPage,
         notification_page::NotificationPage, radio_page::RadioPage, search_page::SearchPage,
-        select_page::SelectPage, table_page::TablePage, table_tree_page::TableTreePage,
-        tag_page::TagPage, textarea_page::TextareaPage,
+        section_page::SectionPage, select_page::SelectPage, table_page::TablePage,
+        table_tree_page::TableTreePage, tag_page::TagPage, textarea_page::TextareaPage,
     },
 };
 use linked_hash_map::LinkedHashMap;
@@ -222,6 +222,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "delete" => html_nested! {
             <Tab key="delete" label="Delete" name="delete">
                 <DeletePage />
+            </Tab>
+        },
+        "section" => html_nested! {
+            <Tab key="section" label="Section" name="section">
+                <SectionPage />
             </Tab>
         },
         _ => panic!("No menu found"),

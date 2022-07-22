@@ -68,6 +68,10 @@
                             "name": "search"
                         },
                         {
+                            "label": "Section",
+                            "name": "section"
+                        },
+                        {
                             "label": "Select",
                             "name": "select"
                         },
