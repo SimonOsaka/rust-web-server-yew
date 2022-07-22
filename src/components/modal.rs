@@ -30,7 +30,7 @@ pub fn modal(props: &ModalProps) -> Html {
         children,
         btn_ok_text,
         btn_cancel_text,
-    } = props;
+    } = props.clone();
 
     let state = use_state(|| false);
 
@@ -42,7 +42,7 @@ pub fn modal(props: &ModalProps) -> Html {
                 state.set(*active);
                 || ()
             },
-            *is_active,
+            is_active,
         );
     }
 
@@ -59,8 +59,6 @@ pub fn modal(props: &ModalProps) -> Html {
     };
 
     let onclick_ok = {
-        // let state = state.clone();
-        let callback = callback.clone();
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
             state.set(false);

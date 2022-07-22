@@ -68,7 +68,7 @@ pub fn notification(props: &NotificationProps) -> Html {
         timeout_callback,
         show_type,
         close_callback,
-    } = props;
+    } = props.clone();
 
     let class_type = match show_type {
         NotificationShowType::Success => "is-success",
@@ -80,8 +80,8 @@ pub fn notification(props: &NotificationProps) -> Html {
     let to_close = use_state(|| false);
     let to_timeout = use_state(|| false);
 
-    if *timeout != 0 {
-        let timeout = *timeout;
+    if timeout != 0 {
+        let timeout = timeout;
         let to_timeout = to_timeout.clone();
         let animation_class = animation_class.clone();
         spawn_local(async move {
@@ -103,8 +103,6 @@ pub fn notification(props: &NotificationProps) -> Html {
     };
 
     let onanimationend = {
-        let close_callback = close_callback.clone();
-        let timeout_callback = timeout_callback.clone();
         Callback::once(move |_| {
             if *to_close {
                 gloo_console::log!("Notification onanimationend close...");
@@ -116,7 +114,6 @@ pub fn notification(props: &NotificationProps) -> Html {
         })
     };
 
-    let text = text.clone();
     html! {
         <div class={classes!("notification", "default-style", *animation_class, class_type)} {onanimationend}>
             <button class="delete" {onclick}></button>

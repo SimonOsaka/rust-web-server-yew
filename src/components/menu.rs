@@ -13,7 +13,7 @@ pub struct MenuProps {
 
 #[function_component(Menu)]
 pub fn menu(props: &MenuProps) -> Html {
-    let MenuProps { callback, current } = props;
+    let MenuProps { callback, current } = props.clone();
 
     let get_menu = use_async_with_options(
         async move {

@@ -7,9 +7,9 @@ pub struct BreadCrumbProps {
 
 #[function_component(BreadCrumb)]
 pub fn breadcrumb(props: &BreadCrumbProps) -> Html {
-    let vec = props.data.clone();
+    let BreadCrumbProps { data } = props.clone();
 
-    let li_html = vec
+    let li_html = data
         .into_iter()
         .map(|(name, is_active)| {
             if is_active {

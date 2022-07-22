@@ -60,7 +60,7 @@ pub fn line_chart(props: &LineChartProps) -> Html {
         id,
         width,
         height,
-    } = props;
+    } = props.clone();
 
     let chart = {
         let id = id.clone();
@@ -91,10 +91,6 @@ pub fn line_chart(props: &LineChartProps) -> Html {
     }
 
     {
-        let data = data.clone();
-        // let chart = chart.clone();
-        let label = label.clone();
-        let title = title.clone();
         use_effect_update_with_deps(
             move |data| {
                 gloo_console::log!("line_chart => use_effect_update_with_deps");
@@ -109,11 +105,9 @@ pub fn line_chart(props: &LineChartProps) -> Html {
         );
     }
 
-    let chart_id = id.clone();
-
     html! {
         <div>
-            <canvas id={chart_id} width={width.to_string()} height={height.to_string()}></canvas>
+            <canvas {id} width={width.to_string()} height={height.to_string()}></canvas>
         </div>
     }
 }

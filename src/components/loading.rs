@@ -10,7 +10,8 @@ pub struct LoadingProps {
 
 #[function_component(Loading)]
 pub fn loading(props: &LoadingProps) -> Html {
-    let loading = props.loading;
+    let LoadingProps { loading } = props.clone();
+
     let mut cls = Classes::new();
     cls.push("modal");
     if loading {

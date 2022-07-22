@@ -20,20 +20,20 @@ pub fn pagination(props: &PaginationProps) -> Html {
         size,
         total,
         callback,
-    } = props;
+    } = props.clone();
 
-    let total_page = if *total < *size {
+    let total_page = if total < size {
         1
-    } else if total % *size == 0 {
-        total / *size
+    } else if total % size == 0 {
+        total / size
     } else {
-        (total / *size) + 1
+        (total / size) + 1
     };
 
-    let current_page = if *current > total_page {
+    let current_page = if current > total_page {
         total_page
     } else {
-        *current
+        current
     };
 
     // previous
@@ -98,7 +98,12 @@ pub fn pagination(props: &PaginationProps) -> Html {
     };
     let pages = page_range.into_iter().map(|idx| {
         if idx == current_page {
-            html! { <li><a class={classes!("pagination-link", "is-current")} aria-label={format!("Page {}", idx)} aria-current="page">{idx}</a></li> }
+            html! { 
+                <li>
+                    <a class={classes!("pagination-link", "is-current" )} aria-label={format!("Page {}", idx)}
+                        aria-current="page">{idx}</a>
+                </li>
+            }
         } else {
             let callback = callback.clone();
             let onclick_page = Callback::from(move |e: MouseEvent| {
@@ -106,7 +111,12 @@ pub fn pagination(props: &PaginationProps) -> Html {
                 gloo_console::log!(format!("click {}", idx));
                 callback.emit(idx)
             });
-            html! { <li><a class="pagination-link" onclick={onclick_page} aria-label={format!("Goto page {}", idx)}>{idx}</a></li> }
+            html! { 
+                <li>
+                    <a class="pagination-link" onclick={onclick_page} aria-label={format!("Goto page {}",
+                        idx)}>{idx}</a>
+                </li>
+            }
         }
     }).collect::<Html>();
 
@@ -120,15 +130,24 @@ pub fn pagination(props: &PaginationProps) -> Html {
     // last
     let page_last = if total_page > 1 {
         if current_page == total_page {
-            html! { <li><a class={classes!("pagination-link", "is-current")} aria-label={format!("Page {}", total_page)} aria-current="page">{total_page}</a></li> }
+            html! {
+                <li>
+                    <a class={classes!("pagination-link", "is-current" )} aria-label={format!("Page {}", total_page)}
+                        aria-current="page">{total_page}</a>
+                </li>
+            }
         } else {
-            let callback = callback.clone();
             let onclick_page_last = Callback::from(move |e: MouseEvent| {
                 e.prevent_default();
                 gloo_console::log!("click last");
                 callback.emit(total_page)
             });
-            html! { <li><a class="pagination-link" onclick={onclick_page_last} aria-label={format!("Goto page {}", total_page)}>{total_page}</a></li> }
+            html! {
+                <li>
+                    <a class="pagination-link" onclick={onclick_page_last} aria-label={format!("Goto page {}",
+                        total_page)}>{total_page}</a>
+                </li>
+            }
         }
     } else {
         html! {}
