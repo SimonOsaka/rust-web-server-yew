@@ -3,7 +3,7 @@ use crate::components::{
     user_context_provider::UserContextProvider,
 };
 use crate::pages::{
-    card_list::CardList, documentation::Documentation, home::Home, page_not_found::PageNotFound,
+    card_list::CardList, example::Example, home::Home, page_not_found::PageNotFound,
     signin::Signin, signup::Signup,
 };
 use yew::prelude::*;
@@ -13,8 +13,8 @@ use yew_router::prelude::*;
 pub enum Route {
     #[at("/")]
     Home,
-    #[at("/documentation")]
-    Documentation,
+    #[at("/example")]
+    Example,
     #[at("/contact")]
     Contact,
     #[at("/about")]
@@ -58,8 +58,8 @@ fn switch(routes: &Route) -> Html {
         Route::NotFound => {
             html! { <PageNotFound /> }
         }
-        Route::Documentation => {
-            html! { <Documentation /> }
+        Route::Example => {
+            html! { <Example /> }
         }
         Route::About => {
             html! {}

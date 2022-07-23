@@ -4,7 +4,7 @@ pub mod chart_page;
 pub mod checkbox_page;
 pub mod dashboard;
 pub mod delete_page;
-pub mod documentation;
+pub mod example;
 pub mod filters_page;
 pub mod form_page;
 pub mod home;

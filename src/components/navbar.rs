@@ -43,8 +43,8 @@ pub fn navbar() -> Html {
                         { "Home" }
                     </Link<Route>>
 
-                    <Link<Route> classes={classes!("navbar-item")} to={Route::Documentation}>
-                        { "Documentation" }
+                    <Link<Route> classes={classes!("navbar-item")} to={Route::Example}>
+                        { "Example" }
                     </Link<Route>>
 
                     <div class="navbar-item has-dropdown is-hoverable">

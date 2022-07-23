@@ -1,6 +1,6 @@
 use crate::{
     components::{
-        breadcrumb::{BreadCrumb, BreadCrumbProps},
+        breadcrumb::{BreadCrumb, BreadCrumbs},
         menu::{Menu, MenuProps},
         tabs::{Tab, Tabs, TabsProps},
     },
@@ -20,17 +20,8 @@ use yew::{
     Callback, FunctionComponent,
 };
 
-#[function_component(Documentation)]
-pub fn documentation() -> Html {
-    // breadcrumb
-    let bc_props = BreadCrumbProps {
-        data: [
-            ("Documentation".to_string(), false),
-            ("Dashboard".to_string(), true),
-        ]
-        .to_vec(),
-    };
-
+#[function_component(Example)]
+pub fn example() -> Html {
     // tabs
     let current = use_state(|| "".to_string());
 
@@ -105,7 +96,10 @@ pub fn documentation() -> Html {
         <>
             <div class="columns">
                 <div class="column">
-                    <BreadCrumb ..bc_props />
+                    <BreadCrumbs>
+                        <BreadCrumb title={"Example"} link={Some("#")} />
+                        <BreadCrumb title={"Dashboard"} />
+                    </BreadCrumbs>
                 </div>
             </div>
             <div class="columns">

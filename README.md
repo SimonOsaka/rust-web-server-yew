@@ -1,6 +1,6 @@
 # rust-web-server-yew
 
-use yew and bulma.
+Use **Yew**(*function_component*) and **Bulma**.
 
 ## install
 
