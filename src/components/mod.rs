@@ -2,6 +2,7 @@ use yew::Classes;
 
 pub mod breadcrumb;
 pub mod button;
+pub mod calendar;
 pub mod card;
 pub mod chart;
 pub mod checkbox;
@@ -88,4 +89,9 @@ impl From<Color> for Classes {
         };
         Self::from(class)
     }
+}
+
+pub(crate) fn gen_auto_id() -> String {
+    let id = uuid::Uuid::new_v4();
+    id.to_string()
 }

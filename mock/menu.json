@@ -16,6 +16,10 @@
                             "name": "button"
                         },
                         {
+                            "label": "Calendar",
+                            "name": "calendar"
+                        },
+                        {
                             "label": "Chart",
                             "name": "chart"
                         },

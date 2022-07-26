@@ -1,4 +1,5 @@
 pub mod button_page;
+pub mod calendar_page;
 pub mod card_list;
 pub mod chart_page;
 pub mod checkbox_page;

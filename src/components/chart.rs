@@ -1,10 +1,11 @@
+use crate::components::gen_auto_id;
 use serde_json::{json, Value};
 use yew::{function_component, html, use_state, Properties};
 
 use wasm_bindgen::prelude::*;
 use yew_hooks::{use_effect_once, use_effect_update_with_deps};
 
-#[wasm_bindgen(module = "/javascript/mychart.js")]
+#[wasm_bindgen(module = "/javascript/chart.js")]
 extern "C" {
     type MyChart;
 
@@ -110,9 +111,4 @@ pub fn line_chart(props: &LineChartProps) -> Html {
             <canvas {id} width={width.to_string()} height={height.to_string()}></canvas>
         </div>
     }
-}
-
-fn gen_auto_id() -> String {
-    let id = uuid::Uuid::new_v4();
-    id.to_string()
 }
