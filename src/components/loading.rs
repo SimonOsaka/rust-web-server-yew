@@ -1,4 +1,5 @@
 use crate::bridge::loading_agent::{LoadingAgent, LoadingResponse};
+use gloo::console;
 use yew::{function_component, html, use_state, Classes, Properties};
 use yew_agent::use_bridge;
 
@@ -18,7 +19,7 @@ pub fn loading(props: &LoadingProps) -> Html {
         cls.push("is-active");
     }
 
-    gloo_console::log!("Loading ...", loading);
+    console::log!("Loading ...", loading);
 
     html! {
         <div class={cls}>
@@ -41,12 +42,12 @@ pub fn loadings() -> Html {
         use_bridge::<LoadingAgent, _>(move |out| {
             match out {
                 LoadingResponse::Out(is_loading) => {
-                    gloo_console::log!("Loadings LoadingResponse...", is_loading);
+                    console::log!("Loadings LoadingResponse...", is_loading);
 
                     loading.set(is_loading);
                 }
             }
-            gloo_console::log!("Loadings received ...");
+            console::log!("Loadings received ...");
         })
     };
 

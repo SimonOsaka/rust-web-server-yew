@@ -1,4 +1,5 @@
 use crate::components::calendar::Calendar;
+use gloo::console;
 use js_sys::Date;
 use serde_json::json;
 use yew::{function_component, html, Callback};
@@ -6,7 +7,7 @@ use yew::{function_component, html, Callback};
 #[function_component(CalendarPage)]
 pub fn calendar_page() -> Html {
     let callback = Callback::from(move |date: String| {
-        gloo_console::log!(format!("Calendar page callback date: {}", date));
+        console::log!(format!("Calendar page callback date: {}", date));
     });
 
     let now = Date::now();

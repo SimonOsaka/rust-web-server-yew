@@ -1,4 +1,5 @@
 use crate::components::{delete::Delete, tag::Tag, Size};
+use gloo::console;
 use web_sys::MouseEvent;
 use yew::{function_component, html, Callback};
 
@@ -6,7 +7,7 @@ use yew::{function_component, html, Callback};
 pub fn delete_page() -> Html {
     let callback = Callback::from(|e: MouseEvent| {
         e.prevent_default();
-        gloo_console::log!("click");
+        console::log!("click");
     });
 
     html! {

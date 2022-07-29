@@ -1,4 +1,5 @@
 use crate::components::{icon::FontAwesomeIcon, input::Input, Color, Size};
+use gloo::console;
 use yew::{function_component, html, Callback};
 
 use crate::components::input::InputTypes;
@@ -6,7 +7,7 @@ use crate::components::input::InputTypes;
 #[function_component(InputPage)]
 pub fn input_page() -> Html {
     let callback = Callback::from(|str: String| {
-        gloo_console::log!(str);
+        console::log!(str);
     });
 
     html! {

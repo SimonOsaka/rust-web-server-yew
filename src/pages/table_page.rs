@@ -9,7 +9,7 @@ use crate::{
     },
     types::list::ListInfo,
 };
-use gloo::timers::future::TimeoutFuture;
+use gloo::{console, timers::future::TimeoutFuture};
 use serde::{Deserialize, Serialize};
 use yew::{function_component, html, props, use_effect_with_deps, use_state, Callback, Properties};
 use yew_agent::use_bridge;
@@ -26,7 +26,7 @@ pub fn table_page() -> Html {
         let current_page = current_page.clone();
         // let request_approve = request_approve.clone();
         use_async(async move {
-            gloo_console::log!("async request list::all");
+            console::log!("async request list::all");
             // open loading
             let loading_props = LoadingProps::builder().loading(true).build();
             loading_agent.send(LoadingInput::Input(loading_props));
@@ -48,7 +48,7 @@ pub fn table_page() -> Html {
         let list_all = list_all.clone();
         use_effect_with_deps(
             move |_| {
-                gloo_console::log!("effect list::all");
+                console::log!("effect list::all");
                 list_all.run();
 
                 || ()
@@ -63,7 +63,7 @@ pub fn table_page() -> Html {
         let current_page = current_page.clone();
         // let request_approve = request_approve.clone();
         Callback::from(move |page| {
-            gloo_console::log!(format!("page = {}", page));
+            console::log!(format!("page = {}", page));
             current_page.set(page);
             // request_approve.set(true);
         })

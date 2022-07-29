@@ -15,6 +15,7 @@ use crate::{
         textarea_page::TextareaPage,
     },
 };
+use gloo::console;
 use linked_hash_map::LinkedHashMap;
 use yew::{
     function_component, html, html_nested, props, use_mut_ref, use_state, virtual_dom::VChild,
@@ -33,7 +34,7 @@ pub fn example() -> Html {
     let tab_click_callback = {
         let current = current.clone();
         Callback::from(move |tab| {
-            gloo_console::log!(format!("toggle tab = {}", tab));
+            console::log!(format!("toggle tab = {}", tab));
             current.set(tab);
         })
     };
@@ -41,7 +42,7 @@ pub fn example() -> Html {
         let current = current.clone();
         let tabs_map = tabs_map.clone();
         Callback::from(move |tab: String| {
-            gloo_console::log!(format!("delete tab = {}", tab));
+            console::log!(format!("delete tab = {}", tab));
             // remove tab menu
             let mut map = (*tabs_map.borrow_mut()).clone();
             if map.contains_key(&tab) {
@@ -50,7 +51,7 @@ pub fn example() -> Html {
                 let first_tab = first.map(|(key, _)| key.to_owned());
                 *tabs_map.borrow_mut() = map;
                 if let Some(t) = first_tab {
-                    gloo_console::log!(format!("current tab is '{}' after delete {}", t, tab));
+                    console::log!(format!("current tab is '{}' after delete {}", t, tab));
                     current.set(t);
                 } else {
                     current.set("".into());
@@ -71,7 +72,7 @@ pub fn example() -> Html {
         let current = current.clone();
         let tabs_map = tabs_map.clone();
         Callback::from(move |menu: String| {
-            gloo_console::log!(format!("menu = {}", menu));
+            console::log!(format!("menu = {}", menu));
             current.set(menu.clone());
             // add a tab and container
             let mut map = (*tabs_map.borrow_mut()).clone();

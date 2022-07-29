@@ -1,5 +1,6 @@
 use std::cmp::PartialEq;
 
+use gloo::console;
 use serde::Serialize;
 
 use yew::{function_component, html, ChildrenWithProps, Html, Properties};
@@ -57,7 +58,7 @@ where
         }
     };
 
-    gloo_console::log!("Table thead ...");
+    console::log!("Table thead ...");
 
     // tbody_html
     let tbody_html = {
@@ -106,7 +107,7 @@ where
         }
     };
 
-    gloo_console::log!("Table tbody ...");
+    console::log!("Table tbody ...");
 
     html! {
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">

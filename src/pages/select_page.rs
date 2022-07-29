@@ -1,10 +1,11 @@
 use crate::components::{select::Select, Color, Size};
+use gloo::console;
 use yew::{function_component, html, Callback};
 
 #[function_component(SelectPage)]
 pub fn select_page() -> Html {
     let callback = Callback::from(|str: String| {
-        gloo_console::log!(str);
+        console::log!(str);
     });
 
     html! {

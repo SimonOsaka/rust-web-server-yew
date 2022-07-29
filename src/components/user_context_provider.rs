@@ -1,5 +1,6 @@
 //! User context provider.
 
+use gloo::console;
 use yew::prelude::*;
 use yew_hooks::{use_async, use_mount};
 
@@ -24,7 +25,7 @@ pub fn user_context_provider(props: &Props) -> Html {
         let current_user = current_user.clone();
         use_mount(move || {
             if get_token().is_some() {
-                gloo_console::log!("token exist");
+                console::log!("token exist");
                 current_user.run();
             }
         });
@@ -44,7 +45,7 @@ pub fn user_context_provider(props: &Props) -> Html {
                     user_ctx.set(user_info.user.clone());
                     // user_ctx.set(u);
                 }
-                gloo_console::log!("rendered");
+                console::log!("rendered");
                 if let Some(error) = &current_user.error {
                     match error {
                         Error::Unauthorized | Error::Forbidden => set_token(None),

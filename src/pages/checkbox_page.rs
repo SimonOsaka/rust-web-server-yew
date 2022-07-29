@@ -1,4 +1,5 @@
 use crate::components::checkbox::Checkbox;
+use gloo::console;
 use yew::{function_component, html, use_state, Callback};
 
 #[function_component(CheckboxPage)]
@@ -7,7 +8,7 @@ pub fn checkbox_page() -> Html {
     let callback = {
         let state = state.clone();
         Callback::from(move |checked: bool| {
-            gloo_console::log!(checked);
+            console::log!(checked);
             state.set(checked);
         })
     };

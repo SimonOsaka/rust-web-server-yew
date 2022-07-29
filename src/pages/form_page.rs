@@ -8,6 +8,7 @@ use crate::components::{
     textarea::Textarea,
     Color,
 };
+use gloo::console;
 use serde::Serialize;
 use serde_json::json;
 use web_sys::MouseEvent;
@@ -108,7 +109,7 @@ pub fn form_page() -> Html {
             e.prevent_default();
             let form_value = (*form_value).clone();
             let json_value = json!(form_value);
-            gloo_console::log!("form value", json_value.to_string());
+            console::log!("form value", json_value.to_string());
         })
     };
 

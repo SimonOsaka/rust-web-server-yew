@@ -3,6 +3,7 @@ use crate::components::{
     icon::{FontAwesomeIcon, FontAwesomeIconText},
     Color,
 };
+use gloo::console;
 use web_sys::MouseEvent;
 use yew::{function_component, html, Callback};
 
@@ -11,7 +12,7 @@ pub fn button_page() -> Html {
     let callback = {
         Callback::from(|e: MouseEvent| {
             e.prevent_default();
-            gloo_console::log!("click");
+            console::log!("click");
         })
     };
 

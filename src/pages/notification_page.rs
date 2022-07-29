@@ -2,6 +2,7 @@ use crate::{
     bridge::notification_agent::{NotificationAgent, NotificationInput},
     components::notifications::{NotificationProps, NotificationShowType},
 };
+use gloo::console;
 use web_sys::MouseEvent;
 use yew::{function_component, html, Callback, Properties};
 use yew_agent::use_bridge;
@@ -13,7 +14,7 @@ pub fn notification_page() -> Html {
     let onclick = {
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
-            gloo_console::log!("send notification");
+            console::log!("send notification");
 
             let props = NotificationProps::builder()
                 .show_type(get_show_type())

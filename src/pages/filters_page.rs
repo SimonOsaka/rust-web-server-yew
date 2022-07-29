@@ -1,4 +1,5 @@
 use crate::components::filter::{Filters, FiltersProps};
+use gloo::console;
 use yew::{function_component, html, Callback};
 
 #[function_component(FiltersPage)]
@@ -48,7 +49,7 @@ pub fn filters_page() -> Html {
         ],
         callback: {
             Callback::from(|value: Vec<String>| {
-                gloo_console::log!("Filters page ", serde_json::to_string(&value).unwrap());
+                console::log!("Filters page ", serde_json::to_string(&value).unwrap());
             })
         },
     };

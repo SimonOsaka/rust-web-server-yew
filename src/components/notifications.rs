@@ -1,5 +1,5 @@
 use crate::bridge::notification_agent::{NotificationAgent, NotificationResponse};
-use gloo::timers::future::TimeoutFuture;
+use gloo::{console, timers::future::TimeoutFuture};
 use wasm_bindgen_futures::spawn_local;
 use yew::{classes, function_component, html, use_state, Callback, Html, Properties};
 use yew_agent::use_bridge;
@@ -13,12 +13,12 @@ pub fn notifications() -> Html {
         use_bridge::<NotificationAgent, _>(move |out| {
             match out {
                 NotificationResponse::Out(ns) => {
-                    gloo_console::log!("Notification NotificationResponse...");
+                    console::log!("Notification NotificationResponse...");
 
                     notification_list.set(ns);
                 }
             }
-            gloo_console::log!("Notifications received ...");
+            console::log!("Notifications received ...");
         });
     }
 
@@ -86,7 +86,7 @@ pub fn notification(props: &NotificationProps) -> Html {
         let animation_class = animation_class.clone();
         spawn_local(async move {
             TimeoutFuture::new(timeout).await;
-            gloo_console::log!("Notification timeout future...");
+            console::log!("Notification timeout future...");
             to_timeout.set(true);
             animation_class.set("right-out");
         });
@@ -96,7 +96,7 @@ pub fn notification(props: &NotificationProps) -> Html {
         let animation_class = animation_class.clone();
         let to_close = to_close.clone();
         Callback::once(move |_| {
-            gloo_console::log!("Notification close...");
+            console::log!("Notification close...");
             to_close.set(true);
             animation_class.set("right-out");
         })
@@ -105,10 +105,10 @@ pub fn notification(props: &NotificationProps) -> Html {
     let onanimationend = {
         Callback::once(move |_| {
             if *to_close {
-                gloo_console::log!("Notification onanimationend close...");
+                console::log!("Notification onanimationend close...");
                 close_callback.emit(());
             } else if *to_timeout {
-                gloo_console::log!("Notification onanimationend timeout...");
+                console::log!("Notification onanimationend timeout...");
                 timeout_callback.emit(());
             }
         })

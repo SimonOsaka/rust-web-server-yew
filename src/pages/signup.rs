@@ -1,3 +1,4 @@
+use gloo::console;
 use web_sys::HtmlInputElement;
 use yew::{
     function_component, html, use_effect_with_deps, use_state, Callback, InputEvent, MouseEvent,
@@ -22,17 +23,17 @@ pub fn sign_up() -> Html {
             let request = SignupInfoWrapper {
                 user: (*signup_info).clone(),
             };
-            gloo_console::log!("signup request");
+            console::log!("signup request");
             signup(request).await
         })
     };
     use_effect_with_deps(
         move |user_signup| {
             if user_signup.data.is_some() {
-                gloo_console::log!("signup to signin");
+                console::log!("signup to signin");
                 history.push(Route::Signin);
             }
-            gloo_console::log!("signup");
+            console::log!("signup");
             || ()
         },
         user_signup.clone(),
@@ -69,7 +70,7 @@ pub fn sign_up() -> Html {
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
             let s = &*signup_info;
-            gloo_console::log!(&s.username, &s.password, &s.email);
+            console::log!(&s.username, &s.password, &s.email);
             user_signup.run();
         })
     };

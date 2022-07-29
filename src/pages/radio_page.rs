@@ -1,4 +1,5 @@
 use crate::components::radio::{Radio, RadioGroup};
+use gloo::console;
 use yew::{function_component, html, use_state, Callback};
 
 #[function_component(RadioPage)]
@@ -7,7 +8,7 @@ pub fn radio_page() -> Html {
     let callback = {
         let state = state.clone();
         Callback::from(move |value: String| {
-            gloo_console::log!(value.clone());
+            console::log!(value.clone());
             state.set(value);
         })
     };

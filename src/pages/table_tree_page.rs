@@ -3,6 +3,7 @@ use crate::{
     components::table::{Table, TableData, TableProps, Td},
     types::site::SiteInfo,
 };
+use gloo::console;
 use serde::{Deserialize, Serialize};
 use web_sys::MouseEvent;
 use yew::{function_component, html, props, Callback};
@@ -13,7 +14,7 @@ pub fn table_tree_page() -> Html {
     let site_all = {
         use_async_with_options(
             async move {
-                gloo_console::log!("async request site::all");
+                console::log!("async request site::all");
 
                 site::all().await
             },
@@ -70,7 +71,7 @@ impl TableData for SiteInfoComponent {
                     let id = self.id;
                     Callback::from(move |e: MouseEvent| {
                         e.prevent_default();
-                        gloo_console::log!("view", id);
+                        console::log!("view", id);
                     })
                 };
                 Some(html! {

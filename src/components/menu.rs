@@ -1,3 +1,4 @@
+use gloo::console;
 use web_sys::MouseEvent;
 use yew::{function_component, html, Callback, Html, Properties};
 use yew_hooks::{use_async_with_options, UseAsyncOptions};
@@ -17,7 +18,7 @@ pub fn menu(props: &MenuProps) -> Html {
 
     let get_menu = use_async_with_options(
         async move {
-            gloo_console::log!("async request menu::get_menu");
+            console::log!("async request menu::get_menu");
             get_menu().await
         },
         UseAsyncOptions::enable_auto(),

@@ -2,6 +2,7 @@ use crate::{
     components::table::{Table, TableData, TableProps, Td},
     types::list::ListInfo,
 };
+use gloo::console;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use web_sys::{HtmlInputElement, InputEvent, MouseEvent};
@@ -23,7 +24,7 @@ pub fn search_page() -> Html {
         use_async(async move {
             let query = (*search_value).clone();
             let result = search(&query.query).await;
-            gloo_console::log!(
+            console::log!(
                 "search page query result",
                 json!(result.clone().unwrap()).to_string()
             );
@@ -39,7 +40,7 @@ pub fn search_page() -> Html {
             e.prevent_default();
             let search = (*search_value).clone();
             let json_str = json!(search);
-            gloo_console::log!("search page query", json_str.to_string());
+            console::log!("search page query", json_str.to_string());
             search_async.run();
         })
     };

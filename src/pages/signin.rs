@@ -1,3 +1,4 @@
+use gloo::console;
 use web_sys::HtmlInputElement;
 use yew::{
     function_component, html, use_effect_with_deps, use_state, Callback, InputEvent, MouseEvent,
@@ -28,7 +29,7 @@ pub fn signin() -> Html {
         move |user_signin| {
             if let Some(user_info) = &user_signin.data {
                 user_ctx.signin(user_info.user.clone());
-                gloo_console::log!("signin");
+                console::log!("signin");
             }
             || ()
         },
@@ -57,7 +58,7 @@ pub fn signin() -> Html {
         Callback::from(move |e: MouseEvent| {
             e.prevent_default();
             let s = &*login_info;
-            gloo_console::log!(&s.password, &s.email);
+            console::log!(&s.password, &s.email);
             user_signin.run();
         })
     };
