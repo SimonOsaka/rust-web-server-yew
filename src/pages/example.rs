@@ -9,10 +9,10 @@ use crate::{
         checkbox_page::CheckboxPage, dashboard::Dashboard, delete_page::DeletePage,
         filters_page::FiltersPage, form_page::FormPage, icon_page::FontAwesomeIconPage,
         image_page::ImagePage, input_page::InputPage, loading_page::LoadingPage,
-        modal_page::ModalPage, notification_page::NotificationPage, radio_page::RadioPage,
-        search_page::SearchPage, section_page::SectionPage, select_page::SelectPage,
-        table_page::TablePage, table_tree_page::TableTreePage, tag_page::TagPage,
-        textarea_page::TextareaPage,
+        markdown_page::MarkDownPage, modal_page::ModalPage, notification_page::NotificationPage,
+        radio_page::RadioPage, search_page::SearchPage, section_page::SectionPage,
+        select_page::SelectPage, table_page::TablePage, table_tree_page::TableTreePage,
+        tag_page::TagPage, textarea_page::TextareaPage,
     },
 };
 use gloo::console;
@@ -228,6 +228,11 @@ fn get_menu(menu: String) -> VChild<FunctionComponent<crate::components::tabs::t
         "calendar" => html_nested! {
             <Tab key="calendar" label="Calendar" name="calendar">
                 <CalendarPage />
+            </Tab>
+        },
+        "markdown" => html_nested! {
+            <Tab key="markdown" label="Markdown" name="markdown">
+                <MarkDownPage />
             </Tab>
         },
         _ => panic!("No menu found"),

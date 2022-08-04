@@ -56,6 +56,10 @@
                             "name": "loading"
                         },
                         {
+                            "label": "Markdown",
+                            "name": "markdown"
+                        },
+                        {
                             "label": "Modal",
                             "name": "modal"
                         },

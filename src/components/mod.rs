@@ -14,6 +14,7 @@ pub mod icon;
 pub mod image;
 pub mod input;
 pub mod loading;
+pub mod markdown;
 pub mod media_object;
 pub mod menu;
 pub mod modal;
