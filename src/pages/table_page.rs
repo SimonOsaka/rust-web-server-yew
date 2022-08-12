@@ -137,7 +137,7 @@ impl TableData for ListInfoComponent {
     // }
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
 pub struct ListInfoComponent {
     pub a: String,
     pub b: String,

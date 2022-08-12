@@ -87,7 +87,7 @@ impl TableData for SiteInfoComponent {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
 pub struct SiteInfoComponent {
     pub id: usize,
     pub domain: String,

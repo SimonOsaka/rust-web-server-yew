@@ -106,7 +106,7 @@ pub fn input(props: &InputProps) -> Html {
     }
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[allow(dead_code)]
 pub enum InputTypes {
     Text,

@@ -3,7 +3,7 @@ use gloo::console;
 use yew::{function_component, html, use_state, Classes, Properties};
 use yew_agent::use_bridge;
 
-#[derive(Clone, Debug, PartialEq, Properties)]
+#[derive(Clone, Debug, PartialEq, Eq, Properties)]
 pub struct LoadingProps {
     #[prop_or(false)]
     pub loading: bool,

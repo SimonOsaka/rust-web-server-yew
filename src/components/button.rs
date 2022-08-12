@@ -164,7 +164,7 @@ pub fn buttons(props: &ButtonsProps) -> Html {
     }
 }
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 #[allow(dead_code)]
 pub enum ButtonsSize {
     Small,
@@ -173,7 +173,7 @@ pub enum ButtonsSize {
     Default,
 }
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 #[allow(dead_code)]
 pub enum ButtonsAlignment {
     Center,

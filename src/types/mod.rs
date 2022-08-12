@@ -7,7 +7,7 @@ pub mod list;
 pub mod menu;
 pub mod site;
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct ErrorInfo {
     pub errors: HashMap<String, Vec<String>>,
 }

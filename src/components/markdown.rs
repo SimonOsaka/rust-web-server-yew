@@ -3,7 +3,7 @@ use pulldown_cmark::{html::push_html, Options, Parser};
 use web_sys::{Element, Node};
 use yew::{function_component, html, Html, Properties};
 
-#[derive(Clone, Debug, PartialEq, Properties)]
+#[derive(Clone, Debug, PartialEq, Eq, Properties)]
 pub struct MarkdownProps {
     #[prop_or("".into())]
     pub value: String,

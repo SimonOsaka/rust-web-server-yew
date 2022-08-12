@@ -121,7 +121,7 @@ where
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Properties)]
+#[derive(Clone, Debug, PartialEq, Eq, Properties)]
 pub struct TdProps {
     #[prop_or("".to_string())]
     pub name: String,

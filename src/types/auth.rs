@@ -23,7 +23,7 @@ pub struct SigninInfoWrapper {
     pub user: SigninInfo,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
 pub struct UserInfo {
     pub email: String,
     pub token: String,
@@ -38,7 +38,7 @@ impl UserInfo {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct UserInfoWrapper {
     pub user: UserInfo,
 }

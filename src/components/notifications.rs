@@ -40,7 +40,7 @@ pub fn notifications() -> Html {
 
 pub type NotificationList = Vec<(usize, NotificationProps)>;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum NotificationShowType {
     Success,
     Warning,

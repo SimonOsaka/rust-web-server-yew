@@ -1,6 +1,6 @@
 use yew::{function_component, html, Classes, Properties};
 
-#[derive(Clone, Debug, PartialEq, Properties)]
+#[derive(Clone, Debug, PartialEq, Eq, Properties)]
 pub struct ImageProps {
     #[prop_or("".to_string())]
     pub src: String,
@@ -77,7 +77,7 @@ pub fn image(props: &ImageProps) -> Html {
     }
 }
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 #[allow(dead_code)]
 pub enum ImageDimension {
     Image128,
@@ -90,7 +90,7 @@ pub enum ImageDimension {
     Default,
 }
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 #[allow(dead_code)]
 pub enum ImageRatio {
     ImageSquare,

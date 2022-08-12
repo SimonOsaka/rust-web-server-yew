@@ -30,7 +30,7 @@ pub mod tag;
 pub mod textarea;
 pub mod user_context_provider;
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 #[allow(dead_code)]
 pub enum Size {
     Small,
@@ -53,7 +53,7 @@ impl From<Size> for Classes {
     }
 }
 
-#[derive(PartialEq, Clone, Debug)]
+#[derive(PartialEq, Eq, Clone, Debug)]
 #[allow(dead_code)]
 pub enum Color {
     Primary,

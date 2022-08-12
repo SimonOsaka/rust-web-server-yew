@@ -33,7 +33,7 @@ pub fn section(props: &SectionProps) -> Html {
     }
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum SectionSize {
     Large,
     Medium,

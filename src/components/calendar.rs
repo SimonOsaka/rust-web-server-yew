@@ -85,7 +85,7 @@ pub fn calendar(props: &CalendarProps) -> Html {
     }
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 #[allow(dead_code)]
 pub enum CalendarType {
     Datetime,
