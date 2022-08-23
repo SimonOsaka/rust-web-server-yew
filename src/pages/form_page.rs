@@ -83,7 +83,7 @@ pub fn form_page() -> Html {
     // agree
     let callback_agree = {
         let form_value = form_value.clone();
-        Callback::from(move |checked: bool| {
+        Callback::from(move |(checked, _)| {
             let mut value = (*form_value).clone();
             value.agree = checked;
             form_value.set(value);
@@ -165,7 +165,7 @@ pub fn form_page() -> Html {
 
             <div class="field">
                 <div class="control">
-                    <Checkbox callback={callback_agree} check={(*form_value).agree}>
+                    <Checkbox callback={callback_agree}>
                         {" I agree to the "}<a href="#">{"terms and conditions"}</a>
                     </Checkbox>
                 </div>

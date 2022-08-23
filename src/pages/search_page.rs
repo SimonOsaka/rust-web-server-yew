@@ -1,15 +1,11 @@
-use crate::{
-    components::table::{Table, TableData, TableProps, Td},
-    types::list::ListInfo,
-};
+use crate::api::list::search;
+use crate::components::table::{Table, Td, Th};
 use gloo::console;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use serde_json::json;
 use web_sys::{HtmlInputElement, InputEvent, MouseEvent};
-use yew::{function_component, html, props, use_state, Callback, TargetCast};
-use yew_hooks::use_async;
-
-use crate::api::list::search;
+use yew::{function_component, html, use_mut_ref, Callback, Html, TargetCast};
+use yew_hooks::{use_async_with_options, UseAsyncOptions};
 
 #[derive(Serialize, Clone, Default)]
 pub struct Search {
@@ -17,20 +13,23 @@ pub struct Search {
 }
 #[function_component(SearchPage)]
 pub fn search_page() -> Html {
-    let search_value = use_state(Search::default);
+    let search_value = use_mut_ref(Search::default);
 
     let search_async = {
         let search_value = search_value.clone();
-        use_async(async move {
-            let query = (*search_value).clone();
-            let result = search(&query.query).await;
-            console::log!(
-                "search page query result",
-                json!(result.clone().unwrap()).to_string()
-            );
+        use_async_with_options(
+            async move {
+                let search_query = (*search_value.borrow()).clone();
+                let result = search(search_query.query.as_str()).await;
+                console::log!(
+                    "search page query result",
+                    json!(result.clone().unwrap()).to_string()
+                );
 
-            result
-        })
+                result
+            },
+            UseAsyncOptions::default(),
+        )
     };
 
     let onclick = {
@@ -48,30 +47,49 @@ pub fn search_page() -> Html {
     let oninput = {
         Callback::from(move |e: InputEvent| {
             let input: HtmlInputElement = e.target_unchecked_into();
-            let mut value = (*search_value).clone();
-            value.query = input.value();
-            search_value.set(value);
+            *search_value.borrow_mut() = Search {
+                query: input.value(),
+            };
         })
     };
 
-    let (data, _count) = if let Some(list_info) = &search_async.data {
+    let (data, count) = if let Some(list_info) = &search_async.data {
         let list = list_info.list.clone();
 
-        (
-            list.into_iter()
-                .map(SearchListInfoComponent::from)
-                .collect::<Vec<SearchListInfoComponent>>(),
-            list_info.count,
-        )
+        (list, list_info.count)
     } else {
         (vec![], 0)
     };
 
-    // table props
-    let table_props = props! {
-         TableProps<SearchListInfoComponent> {
-            data,
+    // table
+    let thead_html = {
+        html! {
+            <tr>
+                <Th>{"A"}</Th>
+                <Th>{"B"}</Th>
+                <Th centered=true>{"C"}</Th>
+            </tr>
         }
+    };
+
+    let table_html = {
+        data.iter()
+            .map(|item| {
+                html! {
+                    <tr>
+                        <Td>
+                            <span class="tag">{item.a.clone()}</span>
+                        </Td>
+                        <Td>
+                            {item.b.clone()}
+                        </Td>
+                        <Td centered=true>
+                            {item.c}
+                        </Td>
+                    </tr>
+                }
+            })
+            .collect::<Html>()
     };
 
     html! {
@@ -87,44 +105,26 @@ pub fn search_page() -> Html {
                 </div>
             </div>
 
-            <Table<SearchListInfoComponent> ..table_props>
-                <Td name="a" label="A" />
-                <Td name="b" label="B" />
-                <Td name="c" label="C" centered=true />
-            </Table<SearchListInfoComponent>>
+            <Table>
+                { thead_html }
+                {
+                    if search_async.loading {
+                        html! {
+                            <tr>
+                                <Td colspan=3 centered=true>{ "Loading..." }</Td>
+                            </tr>
+                        }
+                    } else if count == 0 {
+                        html! {
+                            <tr>
+                                <Td colspan=3 centered=true>{ "No data" }</Td>
+                            </tr>
+                        }
+                    } else {
+                        table_html
+                    }
+                }
+            </Table>
         </>
-    }
-}
-
-impl TableData for SearchListInfoComponent {
-    fn get_field_as_html(&self, _field_name: &str) -> Option<yew::Html> {
-        None
-    }
-
-    // fn get_field_as_value(&self, field_name: &str) -> Option<String> {
-    //     match field_name {
-    //         "c" => {
-    //             let value = serde_json::to_value(self.clone().c).unwrap();
-    //             Some(value.as_i64().unwrap().to_string())
-    //         }
-    //         _ => None,
-    //     }
-    // }
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
-pub struct SearchListInfoComponent {
-    pub a: String,
-    pub b: String,
-    pub c: i32,
-}
-
-impl From<ListInfo> for SearchListInfoComponent {
-    fn from(info: ListInfo) -> Self {
-        Self {
-            a: info.a,
-            b: info.b,
-            c: info.c,
-        }
     }
 }

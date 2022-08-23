@@ -36,6 +36,7 @@ thiserror = "1"
 dotenv_codegen = "0.15"
 linked-hash-map = "0.5"
 pulldown-cmark = "0.9"
+multimap = "0.8"
 
 random-number = "0.1.7"
 getrandom = { version = "0.2.6", features = ["js"] }

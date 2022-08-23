@@ -6,8 +6,7 @@ use yew::{function_component, html, use_state, Callback};
 pub fn checkbox_page() -> Html {
     let state = use_state(|| false);
     let callback = {
-        let state = state.clone();
-        Callback::from(move |checked: bool| {
+        Callback::from(move |(checked, _)| {
             console::log!(checked);
             state.set(checked);
         })
@@ -16,11 +15,11 @@ pub fn checkbox_page() -> Html {
     html! {
         <>
             <div class="block">
-                <Checkbox {callback} check={*state}>{"Remember me"}</Checkbox>
+                <Checkbox {callback}>{"Remember me"}</Checkbox>
             </div>
 
             <div class="block">
-                <Checkbox check=true>{"Remember me"}</Checkbox>
+                <Checkbox init_checked=true>{"Remember me"}</Checkbox>
             </div>
 
             <div class="block">

@@ -148,7 +148,7 @@ pub(crate) fn mock(url: String, method: String) -> String {
             }
         }
     }
-    panic!("no mock json data");
+    panic!("no mock json data, url={}, method={}", &url, &method);
 }
 
 #[cfg(feature = "mock")]

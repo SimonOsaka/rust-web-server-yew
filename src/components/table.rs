@@ -1,145 +1,99 @@
 use std::cmp::PartialEq;
-
-use gloo::console;
-use serde::Serialize;
-
-use yew::{function_component, html, ChildrenWithProps, Html, Properties};
+use yew::{function_component, html, Children, Classes, Html, Properties};
 
 #[derive(Clone, Debug, PartialEq, Properties)]
-pub struct TableProps<T>
-where
-    T: PartialEq + Serialize + TableData,
-{
-    #[prop_or(vec![])]
-    pub data: Vec<T>,
+pub struct TableProps {
     #[prop_or_default]
-    pub children: ChildrenWithProps<Td>,
+    pub children: Children,
 }
 
 #[function_component(Table)]
-pub fn table<T>(props: &TableProps<T>) -> Html
-where
-    T: PartialEq + Serialize + TableData,
-{
-    let TableProps { data, children } = props.clone();
-
-    // all
-    let all = children
-        .iter()
-        .map(|child| {
-            let label = &child.props.label;
-            let name = &child.props.name;
-            let width = child.props.width;
-            let centered = child.props.centered;
-            (label.into(), name.into(), width, centered)
-        })
-        .collect::<Vec<(String, String, Option<u16>, bool)>>();
-
-    let thead_html = {
-        let hds = all.clone();
-        html! {
-            <tr>
-            {
-                hds.iter().map(|(th, _, width, centered)| {
-                    let style = if let Some(w) = width {
-                        format!("width:{w}px;")
-                    } else {
-                        "".to_string()
-                    };
-                    let class = if *centered {
-                        "has-text-centered"
-                    } else {
-                        ""
-                    };
-                    html! {<th {class} {style}>{th}</th>}
-                }).collect::<Html>()
-            }
-            </tr>
-        }
-    };
-
-    console::log!("Table thead ...");
-
-    // tbody_html
-    let tbody_html = {
-        if data.is_empty() {
-            html! {<tr><td colspan={format!("{}", all.len())} class="has-text-centered">{"No data..."}</td></tr>}
-        } else {
-            html! {
-                {
-                    data.iter().map(move |item| {
-                        let all = all.clone();
-                        let value = serde_json::to_value(item).unwrap();
-                        html!{
-                            <tr>
-                                {
-                                    all.into_iter().map(|(_, td_name, _, centered)| {
-                                        let class = if centered {
-                                            "has-text-centered"
-                                        } else {
-                                            ""
-                                        };
-                                        if let Some(field_html) = item.get_field_as_html(&td_name) {
-                                           html!{ <td {class}>{ field_html }</td> }
-                                        } else if let Some(td_value) = value.get(td_name) {
-                                                let tdv = (*td_value).clone();
-                                                let field_value = if tdv.is_i64() {
-                                                    tdv.as_i64().unwrap().to_string()
-                                                } else if tdv.is_string() {
-                                                    tdv.as_str().unwrap().to_string()
-                                                } else if tdv.is_boolean(){
-                                                    tdv.as_bool().unwrap().to_string()
-                                                } else {
-                                                    "".to_string()
-                                                };
-
-                                                html! { <td {class}>{ field_value }</td> }
-                                            } else {
-                                                html! { <td></td> }
-                                            }
-                                    }).collect::<Html>()
-                                }
-                            </tr>
-                        }
-                    }).collect::<Html>()
-                }
-            }
-        }
-    };
-
-    console::log!("Table tbody ...");
+pub fn table(props: &TableProps) -> Html {
+    let TableProps { children } = props.clone();
 
     html! {
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-                { thead_html }
-            </thead>
             <tbody>
-                { tbody_html }
+                { children.iter().collect::<Html>() }
             </tbody>
         </table>
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq, Properties)]
+#[derive(Clone, Debug, PartialEq, Properties)]
 pub struct TdProps {
-    #[prop_or("".to_string())]
-    pub name: String,
-    #[prop_or("".to_string())]
-    pub label: String,
-    #[prop_or(None)]
-    pub width: Option<u16>,
     #[prop_or(false)]
     pub centered: bool,
+
+    #[prop_or(None)]
+    pub colspan: Option<u8>,
+
+    #[prop_or("".into())]
+    pub td_class: String,
+
+    #[prop_or_default]
+    pub children: Children,
 }
 
 #[function_component(Td)]
-pub fn td(_props: &TdProps) -> Html {
-    html! {}
+pub fn td(props: &TdProps) -> Html {
+    let TdProps {
+        centered,
+        children,
+        td_class,
+        colspan,
+    } = props.clone();
+
+    let mut td_classes = Classes::new();
+    td_classes.push(td_class);
+    if centered {
+        td_classes.push("has-text-centered");
+    }
+
+    let colspan = colspan.map(|x| x.to_string());
+
+    html! {
+        <td class={td_classes} {colspan}>
+            { children.iter().collect::<Html>() }
+        </td>
+    }
 }
 
-pub trait TableData: 'static + Default + Clone + Serialize {
-    fn get_field_as_html(&self, field_name: &str) -> Option<Html>;
+#[derive(Clone, Debug, PartialEq, Properties)]
+pub struct ThProps {
+    #[prop_or(false)]
+    pub centered: bool,
 
-    // fn get_field_as_value(&self, field_name: &str) -> Option<String>;
+    #[prop_or(None)]
+    pub width: Option<u16>,
+
+    #[prop_or("".into())]
+    pub th_class: String,
+
+    #[prop_or_default]
+    pub children: Children,
+}
+
+#[function_component(Th)]
+pub fn th(props: &ThProps) -> Html {
+    let ThProps {
+        centered,
+        th_class,
+        children,
+        width,
+    } = props.clone();
+
+    let mut th_classes = Classes::new();
+    th_classes.push(th_class);
+    if centered {
+        th_classes.push("has-text-centered");
+    }
+
+    let style = width.map(|width| format!("width: {}px;", width));
+
+    html! {
+        <th class={th_classes} {style}>
+            { children.iter().collect::<Html>() }
+        </th>
+    }
 }
