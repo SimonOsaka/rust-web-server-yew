@@ -1,8 +1,7 @@
-use gloo::console;
 use std::collections::HashSet;
 use yew_agent::{Agent, AgentLink, Context, HandlerId};
 
-use crate::components::loading::LoadingProps;
+use crate::{components::loading::LoadingProps, log};
 
 #[derive(Clone)]
 pub enum LoadingInput {
@@ -44,7 +43,7 @@ impl Agent for LoadingAgent {
     type Output = LoadingResponse;
 
     fn create(link: AgentLink<Self>) -> Self {
-        console::log!("loading agent create");
+        log!("loading agent create");
         LoadingAgent {
             link,
             subscribers: HashSet::new(),
@@ -52,7 +51,7 @@ impl Agent for LoadingAgent {
     }
 
     fn update(&mut self, msg: Self::Message) {
-        console::log!("Loading agent update");
+        log!("Loading agent update");
         match msg {
             LoadingMessage::Open => {
                 self.send(true);
@@ -64,7 +63,7 @@ impl Agent for LoadingAgent {
     }
 
     fn handle_input(&mut self, msg: Self::Input, _id: HandlerId) {
-        console::log!("Loading agent handle input");
+        log!("Loading agent handle input");
         match msg {
             LoadingInput::Input(props) => {
                 if props.loading {

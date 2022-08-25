@@ -1,5 +1,6 @@
-use gloo::console;
 use yew::{classes, function_component, html, Callback, Html, MouseEvent, Properties};
+
+use crate::log;
 
 const DEFAULT_CURRENT: usize = 1;
 const DEFAULT_SIZE: usize = 10;
@@ -42,7 +43,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
         let callback = callback.clone();
         let onclick_page_previous = Callback::from(move |e: MouseEvent| {
             e.prevent_default();
-            console::log!("click previous");
+            log!("click previous");
             callback.emit(current_page - 1)
         });
         html! { <a class="pagination-previous" onclick={onclick_page_previous}>{"Previous"}</a> }
@@ -57,7 +58,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
         let callback = callback.clone();
         let onclick_page_next = Callback::from(move |e: MouseEvent| {
             e.prevent_default();
-            console::log!("click next");
+            log!("click next");
             callback.emit(current_page + 1)
         });
         html! { <a class="pagination-next" onclick={onclick_page_next}>{"Next page"}</a> }
@@ -70,7 +71,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
         let callback = callback.clone();
         let onclick_page_first = Callback::from(move |e: MouseEvent| {
             e.prevent_default();
-            console::log!("click 1");
+            log!("click 1");
             callback.emit(1)
         });
         html! { <li><a class="pagination-link" onclick={onclick_page_first} aria-label="Goto page 1">{"1"}</a></li> }
@@ -109,7 +110,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
             let callback = callback.clone();
             let onclick_page = Callback::from(move |e: MouseEvent| {
                 e.prevent_default();
-                console::log!(format!("click {}", idx));
+                log!(format!("click {}", idx));
                 callback.emit(idx)
             });
             html! { 
@@ -140,7 +141,7 @@ pub fn pagination(props: &PaginationProps) -> Html {
         } else {
             let onclick_page_last = Callback::from(move |e: MouseEvent| {
                 e.prevent_default();
-                console::log!("click last");
+                log!("click last");
                 callback.emit(total_page)
             });
             html! {

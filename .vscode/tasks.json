@@ -4,7 +4,7 @@
         {
             "type": "shell",
             "command": [
-                "trunk serve"
+                "(cd examples;trunk serve)"
             ],
             "problemMatcher": [
                 "$rustc"
@@ -15,7 +15,7 @@
         {
             "type": "shell",
             "command": [
-                "trunk build"
+                "(cd examples;trunk build)"
             ],
             "problemMatcher": [
                 "$rustc"
@@ -37,7 +37,7 @@
         {
             "type": "shell",
             "command": [
-                "trunk build --release"
+                "(cd examples;trunk build --release)"
             ],
             "problemMatcher": [
                 "$rustc"
@@ -45,5 +45,14 @@
             "group": "build",
             "label": "trunk build --release"
         },
+        {
+            "type": "cargo",
+            "command": "build",
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build",
+            "label": "cargo build"
+        }
     ]
 }

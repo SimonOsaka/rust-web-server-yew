@@ -1,7 +1,6 @@
 use std::fmt::Display;
 
-use crate::components::gen_auto_id;
-use gloo::console;
+use crate::{components::gen_auto_id, log};
 use serde_json::{json, Value};
 use wasm_bindgen::prelude::*;
 use yew::{classes, function_component, html, use_mut_ref, Callback, Properties};
@@ -62,7 +61,7 @@ pub fn calendar(props: &CalendarProps) -> Html {
                 );
 
                 let cb = Closure::wrap(Box::new(move |e: JsValue| {
-                    console::log!(format!(
+                    log!(format!(
                         "calendar callback: {}",
                         e.as_string().unwrap_or_default()
                     ));

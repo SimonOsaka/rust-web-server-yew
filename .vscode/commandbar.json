@@ -24,7 +24,7 @@
             "priority": 9
         },
         {
-            "text": "✓ clippy",
+            "text": "✓ cargo clippy",
             "color": "Purple",
             "tooltip": "cargo clippy",
             "language": "rust",
@@ -42,6 +42,16 @@
             "command": "workbench.action.tasks.runTask|trunk build --release",
             "alignment": "left",
             "priority": 7
+        },
+        {
+            "text": "🔨 cargo build",
+            "color": "blue",
+            "tooltip": "cargo build",
+            "language": "rust",
+            "commandType": "palette",
+            "command": "workbench.action.tasks.runTask|cargo build",
+            "alignment": "left",
+            "priority": 6
         }
     ]
 }

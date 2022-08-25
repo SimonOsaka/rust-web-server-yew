@@ -1,5 +1,7 @@
-use crate::components::{notifications::NotificationList, notifications::NotificationProps};
-use gloo::console;
+use crate::{
+    components::{notifications::NotificationList, notifications::NotificationProps},
+    log,
+};
 use std::collections::HashSet;
 use yew::Callback;
 use yew_agent::{Agent, AgentLink, Context, HandlerId};
@@ -52,7 +54,7 @@ impl Agent for NotificationAgent {
     type Output = NotificationResponse;
 
     fn create(link: AgentLink<Self>) -> Self {
-        console::log!("notification agent create");
+        log!("notification agent create");
         NotificationAgent {
             link,
             subscribers: HashSet::new(),
@@ -62,7 +64,7 @@ impl Agent for NotificationAgent {
     }
 
     fn update(&mut self, msg: Self::Message) {
-        console::log!("notification agent update");
+        log!("notification agent update");
         match msg {
             NotificationMessage::Add(mut props) => {
                 let next_id = self.next_id;
@@ -70,7 +72,7 @@ impl Agent for NotificationAgent {
                 props.timeout_callback = {
                     let s = self.clone();
                     Callback::once(move |_| {
-                        console::log!("Notification timeout callback...");
+                        log!("Notification timeout callback...");
                         s.link.send_message(NotificationMessage::Del(next_id));
                     })
                 };
@@ -78,7 +80,7 @@ impl Agent for NotificationAgent {
                 props.close_callback = {
                     let s = self.clone();
                     Callback::once(move |_| {
-                        console::log!("Notification close callback...");
+                        log!("Notification close callback...");
                         s.link.send_message(NotificationMessage::Del(next_id));
                     })
                 };
@@ -91,7 +93,7 @@ impl Agent for NotificationAgent {
                 for (pos, (id, _)) in self.ns.iter().enumerate() {
                     if *id == next_id {
                         self.ns.remove(pos);
-                        console::log!("Notification removed...");
+                        log!("Notification removed...");
                         self.send(self.ns.clone());
                         break;
                     }
@@ -101,7 +103,7 @@ impl Agent for NotificationAgent {
     }
 
     fn handle_input(&mut self, msg: Self::Input, _id: HandlerId) {
-        console::log!("notification agent handle input");
+        log!("notification agent handle input");
         match msg {
             NotificationInput::Add(props) => {
                 self.link.send_message(NotificationMessage::Add(props))

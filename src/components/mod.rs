@@ -16,9 +16,7 @@ pub mod input;
 pub mod loading;
 pub mod markdown;
 pub mod media_object;
-pub mod menu;
 pub mod modal;
-pub mod navbar;
 pub mod notifications;
 pub mod pagination;
 pub mod radio;
@@ -28,7 +26,6 @@ pub mod table;
 pub mod tabs;
 pub mod tag;
 pub mod textarea;
-pub mod user_context_provider;
 
 #[derive(PartialEq, Eq, Clone, Debug)]
 #[allow(dead_code)]

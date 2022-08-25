@@ -1,5 +1,4 @@
-use crate::components::gen_auto_id;
-use gloo::console;
+use crate::{components::gen_auto_id, log};
 use serde_json::{json, Value};
 use yew::{function_component, html, use_state, Properties};
 
@@ -75,7 +74,7 @@ pub fn line_chart(props: &LineChartProps) -> Html {
         let label = label.clone();
         let title = title.clone();
         use_effect_once(move || {
-            console::log!("line_chart => use_effect_once");
+            log!("line_chart => use_effect_once");
             let data = get_chart_data(label.clone(), data.clone(), title);
             let config = json!({
                 "type": "line",
@@ -95,7 +94,7 @@ pub fn line_chart(props: &LineChartProps) -> Html {
     {
         use_effect_update_with_deps(
             move |data| {
-                console::log!("line_chart => use_effect_update_with_deps");
+                log!("line_chart => use_effect_update_with_deps");
                 let data = get_chart_data(label.clone(), data.clone(), title);
                 let jsvalue = JsValue::from_serde(&data);
                 if let Ok(d) = jsvalue {
