@@ -1,8 +1,8 @@
 use crate::{components::gen_auto_id, log};
+use gloo::utils::format::JsValueSerdeExt;
 use serde_json::{json, Value};
-use yew::{function_component, html, use_state, Properties};
-
 use wasm_bindgen::prelude::*;
+use yew::{function_component, html, use_state, Properties};
 use yew_hooks::{use_effect_once, use_effect_update_with_deps};
 
 #[wasm_bindgen(module = "/javascript/chart.js")]
@@ -83,7 +83,7 @@ pub fn line_chart(props: &LineChartProps) -> Html {
                     "responsive": false
                 }
             });
-            let jsvalue = JsValue::from_serde(&config);
+            let jsvalue = <JsValue as JsValueSerdeExt>::from_serde(&config);
             if let Ok(cfg) = jsvalue {
                 (*chart).draw(cfg);
             }
@@ -96,7 +96,7 @@ pub fn line_chart(props: &LineChartProps) -> Html {
             move |data| {
                 log!("line_chart => use_effect_update_with_deps");
                 let data = get_chart_data(label.clone(), data.clone(), title);
-                let jsvalue = JsValue::from_serde(&data);
+                let jsvalue = <JsValue as JsValueSerdeExt>::from_serde(&data);
                 if let Ok(d) = jsvalue {
                     (*chart).update(d);
                 }

@@ -1,7 +1,7 @@
-use std::fmt::Display;
-
 use crate::{components::gen_auto_id, log};
+use gloo::utils::format::JsValueSerdeExt;
 use serde_json::{json, Value};
+use std::fmt::Display;
 use wasm_bindgen::prelude::*;
 use yew::{classes, function_component, html, use_mut_ref, Callback, Properties};
 use yew_hooks::use_effect_once;
@@ -50,7 +50,7 @@ pub fn calendar(props: &CalendarProps) -> Html {
 
     {
         use_effect_once(move || {
-            let jsvalue = JsValue::from_serde(&options);
+            let jsvalue = <JsValue as JsValueSerdeExt>::from_serde(&options);
             if let Ok(options) = jsvalue {
                 calendar.borrow_mut().init(
                     options,
