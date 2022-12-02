@@ -1,12 +1,12 @@
-use crate::{
+use rust_web_server_yew::http::{
     error::Error,
-    types::{
-        auth::{SigninInfoWrapper, SignupInfoWrapper, UserInfoWrapper},
-        EmptyWrapper,
-    },
+    request::{request_get, request_post},
 };
 
-use super::request::{request_get, request_post};
+use crate::types::{
+    auth::{SigninInfoWrapper, SignupInfoWrapper, UserInfoWrapper},
+    EmptyWrapper,
+};
 
 /// Get current user info
 pub async fn current() -> Result<UserInfoWrapper, Error> {

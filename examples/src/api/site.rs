@@ -1,6 +1,6 @@
-use crate::{error::Error, types::site::SiteInfoWrapper};
+use rust_web_server_yew::http::{error::Error, request::request_get};
 
-use super::request::request_get;
+use crate::types::site::SiteInfoWrapper;
 
 /// Get list
 pub async fn all() -> Result<SiteInfoWrapper, Error> {

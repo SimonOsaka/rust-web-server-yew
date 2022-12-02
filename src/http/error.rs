@@ -1,7 +1,14 @@
 //! Error type for error handling
 
-use crate::types::ErrorInfo;
+use std::collections::HashMap;
+
+use serde::{Deserialize, Serialize};
 use thiserror::Error as ThisError;
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
+pub struct ErrorInfo {
+    pub errors: HashMap<String, Vec<String>>,
+}
 
 /// Define all possible errors
 #[derive(ThisError, Clone, Debug, PartialEq, Eq)]

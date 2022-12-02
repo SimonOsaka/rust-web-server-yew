@@ -1,14 +1,16 @@
 //! User context provider.
 
-use rust_web_server_yew::log;
+use rust_web_server_yew::{
+    http::{
+        error::Error,
+        request::{get_token, set_token},
+    },
+    log,
+};
 use yew::prelude::*;
 use yew_hooks::{use_async, use_mount};
 
-use crate::{
-    api::{auth::current, get_token, set_token},
-    error::Error,
-    types::auth::UserInfo,
-};
+use crate::{api::auth::current, types::auth::UserInfo};
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {

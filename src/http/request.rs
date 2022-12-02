@@ -1,14 +1,24 @@
-#[cfg(not(feature = "mock"))]
-use dotenv_codegen::dotenv;
+use crate::http::error::Error;
+use gloo::storage::{LocalStorage, Storage};
+use once_cell::sync::Lazy;
+use parking_lot::RwLock;
 use serde::{de::DeserializeOwned, Serialize};
 
 #[cfg(not(feature = "mock"))]
-use super::get_token;
-use crate::error::Error;
+use crate::http::error::ErrorInfo;
 #[cfg(not(feature = "mock"))]
-use crate::types::ErrorInfo;
+use dotenv_codegen::dotenv;
 #[cfg(not(feature = "mock"))]
 const API_ROOT: &str = dotenv!("API_ROOT");
+
+#[cfg(feature = "mock")]
+static MOCK_FILES: once_cell::sync::OnceCell<Vec<String>> = once_cell::sync::OnceCell::new();
+
+pub fn mock_init(mocks: Vec<String>) {
+    println!("num of mocks {}", mocks.len());
+    #[cfg(feature = "mock")]
+    MOCK_FILES.set(mocks).expect("Mock files set required");
+}
 
 #[cfg(feature = "mock")]
 pub async fn request<B, T>(method: reqwest::Method, url: String, _body: B) -> Result<T, Error>
@@ -111,12 +121,13 @@ where
 
 #[cfg(feature = "mock")]
 pub(crate) fn mock(url: String, method: String) -> String {
-    let mock_json_str_includes = vec![
-        include_str!("../../mock/auth.json"),
-        include_str!("../../mock/list.json"),
-        include_str!("../../mock/menu.json"),
-        include_str!("../../mock/site.json"),
-    ];
+    let mock_json_str_includes = MOCK_FILES.get().unwrap();
+    // let mock_json_str_includes = vec![
+    //     include_str!("../../mock/auth.json"),
+    //     include_str!("../../mock/list.json"),
+    //     include_str!("../../mock/menu.json"),
+    //     include_str!("../../mock/site.json"),
+    // ];
     for mock_json_str_include in mock_json_str_includes {
         let mock_json_value: serde_json::Value =
             serde_json::from_str(mock_json_str_include).unwrap();
@@ -149,6 +160,33 @@ pub(crate) fn mock(url: String, method: String) -> String {
         }
     }
     panic!("no mock json data, url={}, method={}", &url, &method);
+}
+
+/// Get jwt token from lazy static.
+pub fn get_token() -> Option<String> {
+    let token_lock = TOKEN.read();
+    token_lock.clone()
+}
+
+const TOKEN_KEY: &str = "rust-web-server-yew::token";
+
+static TOKEN: Lazy<RwLock<Option<String>>> = Lazy::new(|| {
+    if let Ok(token) = LocalStorage::get(TOKEN_KEY) {
+        RwLock::new(Some(token))
+    } else {
+        RwLock::new(None)
+    }
+});
+
+/// Set jwt token to local storage.
+pub fn set_token(token: Option<String>) {
+    if let Some(t) = token.clone() {
+        LocalStorage::set(TOKEN_KEY, t).expect("failed to set");
+    } else {
+        LocalStorage::delete(TOKEN_KEY);
+    }
+    let mut token_lock = TOKEN.write();
+    *token_lock = token;
 }
 
 #[cfg(feature = "mock")]

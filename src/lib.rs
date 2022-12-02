@@ -1,5 +1,6 @@
 pub mod bridge;
 pub mod components;
+pub mod http;
 
 /// debug mode will output log message
 #[cfg(debug_assertions)]

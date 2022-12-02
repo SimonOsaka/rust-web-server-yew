@@ -1,10 +1,10 @@
 use std::fmt;
 use std::ops::Deref;
 
+use rust_web_server_yew::http::request::set_token;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-use crate::api::set_token;
 use crate::app::Route;
 use crate::types::auth::UserInfo;
 
